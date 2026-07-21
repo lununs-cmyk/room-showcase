@@ -5,7 +5,7 @@ const e = {
   login: $('#login'), dashboard: $('#dashboard'), loginForm: $('#loginForm'), password: $('#password'), loginError: $('#loginError'), lock: $('#lock'),
   createForm: $('#createForm'), roomTypeInputs: $$('input[name="roomType"]'), chatFields: $('#chatFields'), cameraFields: $('#cameraFields'), feedFields: $('#feedFields'),
   images: $('#images'), filePreview: $('#filePreview'), roomCode: $('#roomCode'), regenerateCode: $('#regenerateCode'),
-  titleInput: $('#titleInput'), publisherName: $('#publisherName'), ownerName: $('#ownerName'), displayName: $('#displayName'), userId: $('#userId'), caption: $('#caption'),
+  titleInput: $('#titleInput'), publisherName: $('#publisherName'), ownerName: $('#ownerName'), displayName: $('#displayName'), userId: $('#userId'), caption: $('#caption'), avatar: $('#avatar'),
   showGrid: $('#showGrid'), showStickers: $('#showStickers'), showMeta: $('#showMeta'), shutterSound: $('#shutterSound'), allowDownload: $('#allowDownload'), showComments: $('#showComments'), showBookmark: $('#showBookmark'),
   livePreview: $('#livePreview'), previewTypeName: $('#previewTypeName'),
   created: $('#created'), createdUrl: $('#createdUrl'), iframe: $('#iframeCode'), openCreated: $('#openCreated'), copyCreated: $('#copyCreated'), copyIframe: $('#copyIframe'),
@@ -16,6 +16,7 @@ const e = {
 let password = sessionStorage.getItem('chat-admin-password') || '';
 let timer;
 let objectUrls = [];
+let avatarObjectUrl = "";
 
 const randomCode = () => {
   const bytes = new Uint8Array(16);
@@ -186,6 +187,8 @@ function syncConditionalFields() {
 function clearObjectUrls() {
   objectUrls.forEach(url => URL.revokeObjectURL(url));
   objectUrls = [];
+  if (avatarObjectUrl) URL.revokeObjectURL(avatarObjectUrl);
+  avatarObjectUrl = '';
 }
 
 function selectedImageUrl() {
@@ -216,6 +219,7 @@ function renderLivePreview() {
   const userId = e.userId.value.trim() || '@daily_moment';
   const caption = e.caption.value.trim() || '게시글 본문이 여기에 표시됩니다.';
   const imageUrl = selectedImageUrl();
+  const avatarUrl = avatarObjectUrl || imageUrl;
   e.livePreview.innerHTML = '';
 
   if (type === 'chat') {
@@ -239,7 +243,7 @@ function renderLivePreview() {
         ${e.showGrid.checked?'<div class="preview-camera-grid"></div><div class="preview-camera-focus"></div>':''}
       </div>
       <div class="preview-camera-top"><span>⚡</span><b>${title}</b><span>◌</span></div>
-      <div class="preview-camera-nav"><button>‹</button><span>${objectUrls.length?`1 / ${objectUrls.length}`:'0 / 0'}</span><button>›</button></div>
+      <div class="preview-camera-nav"><span>${objectUrls.length?`1 / ${objectUrls.length}`:'0 / 0'}</span></div>
       <div class="preview-camera-bottom">
         <div class="preview-mode-row">${Array.from({length:Math.max(1,objectUrls.length)},(_,i)=>`<span class="${i===0?'active':''}">포토${i+1}</span>`).join('')}</div>
         <div class="preview-camera-controls"><div class="preview-thumb" style="${imageUrl?`background-image:url('${imageUrl}')`:''}"></div><div class="preview-shutter"></div><div class="preview-flip">↻</div></div>
@@ -250,7 +254,7 @@ function renderLivePreview() {
 
   const wrap=document.createElement('section'); wrap.className='preview-sns-shell';
   const slides=(objectUrls.length?objectUrls:['']).map((url,i)=>`<div class="preview-sns-slide">${url?`<img src="${url}" alt="게시 이미지 ${i+1}">`:'<div class="preview-sns-placeholder">이미지를 선택해 주세요.</div>'}</div>`).join('');
-  wrap.innerHTML=`<div class="preview-sns-top"><b><span>✦</span>Moment</b><div>♡</div></div><main class="preview-sns-feed"><article class="preview-sns-post"><header>${imageUrl?`<img src="${imageUrl}">`:'<div class="preview-avatar"></div>'}<div><b>${displayName}</b><span>${userId} · 방금 전</span></div><strong>•••</strong></header><div class="preview-sns-media"><div class="new-badge">NEW POST</div><button class="preview-sns-arrow left">‹</button><div class="preview-sns-track">${slides}</div><button class="preview-sns-arrow right">›</button><div class="preview-sns-counter">1 / ${Math.max(1,objectUrls.length)}</div></div><div class="preview-sns-body"><div class="preview-sns-comments">${e.showComments.checked?'<div><b>mood_archive</b> ✧･ﾟ분위기 진짜 최고예요 (˶ᵔ ᵕ ᵔ˶)♡</div><div><b>soft_day</b> 저장 완료 𓂃📌⋆｡°</div>':''}</div><div class="preview-sns-info"><div class="preview-sns-actions"><button>♡</button><button>○</button>${e.showBookmark.checked?'<button class="bookmark">⇩</button>':''}</div><b>좋아요 128개</b><p><b>${displayName}</b> ${caption}</p></div></div></article></main></section>`;
+  wrap.innerHTML=`<div class="preview-sns-top"><b><span>✦</span>${title}</b><div>♡</div></div><main class="preview-sns-feed"><article class="preview-sns-post"><header>${avatarUrl?`<img src="${avatarUrl}">`:'<div class="preview-avatar"></div>'}<div><b>${displayName}</b><span>${userId} · 방금 전</span></div><strong>•••</strong></header><div class="preview-sns-media"><div class="new-badge">NEW POST</div><button class="preview-sns-arrow left">‹</button><div class="preview-sns-track">${slides}</div><button class="preview-sns-arrow right">›</button><div class="preview-sns-counter">1 / ${Math.max(1,objectUrls.length)}</div></div><div class="preview-sns-body"><div class="preview-sns-comments">${e.showComments.checked?'<div><b>mood_archive</b> ✧･ﾟ분위기 진짜 최고예요 (˶ᵔ ᵕ ᵔ˶)♡</div><div><b>soft_day</b> 저장 완료 𓂃📌⋆｡°</div>':''}</div><div class="preview-sns-info"><div class="preview-sns-actions"><button>♡</button><button>○</button>${e.showBookmark.checked?'<button class="bookmark">⇩</button>':''}</div><b>좋아요 128개</b><p><b>${displayName}</b> ${caption}</p></div></div></article></main></section>`;
   e.livePreview.append(wrap);
 }
 function renderFilePreview() {
@@ -295,6 +299,11 @@ e.lock.onclick = () => {
 e.roomTypeInputs.forEach(input => input.addEventListener('change', () => { setCode(); syncConditionalFields(); }));
 e.regenerateCode.onclick = setCode;
 e.images.onchange = renderFilePreview;
+e.avatar.onchange = () => {
+  if (avatarObjectUrl) URL.revokeObjectURL(avatarObjectUrl);
+  avatarObjectUrl = e.avatar.files[0] ? URL.createObjectURL(e.avatar.files[0]) : '';
+  renderLivePreview();
+};
 [e.titleInput, e.publisherName, e.ownerName, e.displayName, e.userId, e.caption, e.showGrid, e.showStickers, e.showMeta, e.shutterSound, e.allowDownload, e.showComments, e.showBookmark].forEach(input => input.addEventListener('input', renderLivePreview));
 
 e.createForm.onsubmit = async event => {

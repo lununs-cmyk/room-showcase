@@ -87,3 +87,15 @@ D1에 `migrations/0001_initial.sql` 전체를 실행하고 위 바인딩 3개를
 ## v5.0 변경사항
 - 카메라 셔터 효과음을 외부 URL 대신 프로젝트 내부 `assets/shutter.mp3` 파일로 포함했습니다.
 - 촬영 버튼 클릭 시 `/assets/shutter.mp3`를 직접 재생하므로 외부 서버의 확장자·CORS·핫링크 제한 영향을 받지 않습니다.
+
+
+## v5.1
+- SNS 피드형 관리자 미리보기의 아바타가 가로로 늘어나는 문제 수정
+- 실제 생성 화면에도 1:1 원형 비율 보호 규칙 추가
+
+
+## v5.2 changes
+- SNS title follows room title.
+- Optional SNS avatar upload, falling back to the first post image.
+- Camera image selection uses Photo text buttons only.
+- Chat file box with gallery and bulk download.

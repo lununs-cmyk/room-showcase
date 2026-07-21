@@ -87,3 +87,43 @@ html,body{width:100%;height:100%;min-height:0;overflow:hidden}
 .sns-body{padding-bottom:9px!important;background:linear-gradient(to bottom,transparent 0,rgba(19,22,29,.42) 42px,rgba(19,22,29,.88) 82px,#13161d 100%)}
 .sns-comments{opacity:.78;max-height:96px;mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.3) 22px,#000 50px,#000 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.3) 22px,#000 50px,#000 100%)}
 .sns-feed-info p{margin-bottom:0}
+
+/* v5.1 SNS avatar aspect-ratio safeguard */
+.sns-post header>img,
+#snsAvatar{
+  display:block;
+  flex:0 0 36px;
+  width:36px!important;
+  min-width:36px;
+  max-width:36px;
+  height:36px!important;
+  min-height:36px;
+  max-height:36px;
+  aspect-ratio:1/1;
+  border-radius:50%;
+  object-fit:cover;
+  overflow:hidden;
+}
+.preview-sns-post header>.preview-avatar,
+.preview-sns-post header>img{
+  display:block;
+  flex:0 0 36px!important;
+  width:36px!important;
+  min-width:36px!important;
+  max-width:36px!important;
+  height:36px!important;
+  min-height:36px!important;
+  max-height:36px!important;
+  aspect-ratio:1/1;
+  border-radius:50%;
+  object-fit:cover;
+  overflow:hidden;
+}
+.preview-sns-post header>.preview-avatar{
+  background:linear-gradient(135deg,#7359ff,#ff4f8b);
+}
+
+/* v5.2 file box, fixed SNS title/avatar, camera text-only switching */
+.chat-card{position:relative}
+.chat-header-actions{display:flex;align-items:center;gap:10px}.filebox-icon{position:relative;display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid #ffffff1f;border-radius:12px;background:#ffffff0b;color:#fff;font-size:19px;cursor:pointer}.filebox-icon:hover{background:#ffffff14}.filebox-icon span{position:absolute;right:-5px;top:-6px;display:grid;place-items:center;min-width:18px;height:18px;padding:0 4px;border-radius:999px;background:#7658ee;color:#fff;font-size:10px;font-weight:800}.filebox-panel{position:absolute;z-index:30;inset:70px 14px 126px;overflow:hidden;border:1px solid #ffffff20;border-radius:22px;background:rgba(16,20,29,.94);box-shadow:0 24px 70px #0009;backdrop-filter:blur(20px);padding:16px}.filebox-panel[hidden]{display:none}.filebox-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.filebox-head>div{display:grid;gap:3px}.filebox-head small{color:#9299a8}.filebox-head button{width:34px;height:34px;border:1px solid #ffffff1f;border-radius:50%;background:#ffffff0b;color:#fff;font-size:22px}.filebox-grid{height:calc(100% - 104px);overflow:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-content:start;gap:10px;padding-right:4px;scrollbar-width:thin;scrollbar-color:#8168ff transparent}.filebox-item{min-width:0;padding:0;overflow:hidden;border:1px solid #ffffff17;border-radius:14px;background:#090c12;color:#fff;text-align:left;cursor:pointer}.filebox-item img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}.filebox-item span{display:block;overflow:hidden;padding:8px;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#b8bfcb}.filebox-empty{grid-column:1/-1;display:grid;place-items:center;min-height:160px;color:#838b99}.filebox-save{width:100%;height:44px;margin-top:12px;border:0;border-radius:14px;background:linear-gradient(135deg,#7658ee,#a855f7);color:#fff;font-weight:800}.filebox-save:disabled{opacity:.4}.camera-nav{justify-content:center!important;pointer-events:none}.camera-nav span{margin-inline:auto}.camera-nav button{display:none!important}
+@media(max-width:600px){.filebox-panel{inset:64px 8px 122px}.filebox-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
