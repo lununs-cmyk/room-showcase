@@ -6,7 +6,7 @@ const e = {
   createForm: $('#createForm'), roomTypeInputs: $$('input[name="roomType"]'), chatFields: $('#chatFields'), cameraFields: $('#cameraFields'), feedFields: $('#feedFields'),
   images: $('#images'), filePreview: $('#filePreview'), roomCode: $('#roomCode'), regenerateCode: $('#regenerateCode'),
   titleInput: $('#titleInput'), publisherName: $('#publisherName'), ownerName: $('#ownerName'), displayName: $('#displayName'), userId: $('#userId'), caption: $('#caption'),
-  showGrid: $('#showGrid'), showStickers: $('#showStickers'), showMeta: $('#showMeta'), shutterSound: $('#shutterSound'), allowDownload: $('#allowDownload'), showComments: $('#showComments'), showShare: $('#showShare'), showBookmark: $('#showBookmark'),
+  showGrid: $('#showGrid'), showStickers: $('#showStickers'), showMeta: $('#showMeta'), shutterSound: $('#shutterSound'), allowDownload: $('#allowDownload'), showComments: $('#showComments'), showBookmark: $('#showBookmark'),
   livePreview: $('#livePreview'), previewTypeName: $('#previewTypeName'),
   created: $('#created'), createdUrl: $('#createdUrl'), iframe: $('#iframeCode'), openCreated: $('#openCreated'), copyCreated: $('#copyCreated'), copyIframe: $('#copyIframe'),
   rooms: $('#rooms'), count: $('#count'), refresh: $('#refresh'), tpl: $('#roomTpl'), toast: $('#toast'), createButton: $('#createButton'),
@@ -78,7 +78,7 @@ function fail(err) {
 const roomUrl = id => `${location.origin}/?room=${encodeURIComponent(id)}`;
 
 function iframeHeight(type) {
-  return type === 'camera' ? 820 : type === 'feed' ? 900 : 780;
+  return type === 'camera' ? 780 : type === 'feed' ? 780 : 780;
 }
 
 function iframeCode(url, type) {
@@ -243,7 +243,7 @@ function renderLivePreview() {
   head.innerHTML=`<div class="avatar"></div><div><strong>${e.displayName.value.trim()||'오늘의 기록'}</strong><div class="helper">${e.userId.value.trim()||'@daily_moment'} · 방금 전</div></div>`;
   wrap.append(head,makeImageOrPlaceholder());
   const box=document.createElement('div'); box.className='mock-feed-copy';
-  const icons=['♡','○']; if(e.showShare.checked) icons.push('⌁'); if(e.showBookmark.checked) icons.push('⌑');
+  const icons=['♡','○']; if(e.showBookmark.checked) icons.push('⇩');
   box.innerHTML=`<div class="mock-feed-actions">${icons.join(' ')}</div><strong>좋아요 수는 자동 결정</strong><p><b>${e.displayName.value.trim()||'오늘의 기록'}</b> ${e.caption.value.trim()||'게시글 본문이 여기에 표시됩니다.'}</p>${e.showComments.checked?'<div class="mock-feed-comment"><b>mood_archive</b> 분위기 너무 좋다…</div>':''}`;
   wrap.append(box); e.livePreview.append(wrap);
 }
@@ -289,7 +289,7 @@ e.lock.onclick = () => {
 e.roomTypeInputs.forEach(input => input.addEventListener('change', syncConditionalFields));
 e.regenerateCode.onclick = setCode;
 e.images.onchange = renderFilePreview;
-[e.titleInput, e.publisherName, e.ownerName, e.displayName, e.userId, e.caption, e.showGrid, e.showStickers, e.showMeta, e.shutterSound, e.allowDownload, e.showComments, e.showShare, e.showBookmark].forEach(input => input.addEventListener('input', renderLivePreview));
+[e.titleInput, e.publisherName, e.ownerName, e.displayName, e.userId, e.caption, e.showGrid, e.showStickers, e.showMeta, e.shutterSound, e.allowDownload, e.showComments, e.showBookmark].forEach(input => input.addEventListener('input', renderLivePreview));
 
 e.createForm.onsubmit = async event => {
   event.preventDefault();
