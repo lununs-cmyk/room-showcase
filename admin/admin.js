@@ -210,30 +210,29 @@ function makeImageOrPlaceholder(className = '') {
 function renderLivePreview() {
   const type = currentType();
   const title = e.titleInput.value.trim() || '방 제목';
+  const publisher = e.publisherName.value.trim() || '이미지 게시자';
+  const owner = e.ownerName.value.trim() || '게시판 주인';
+  const displayName = e.displayName.value.trim() || '오늘의 기록';
+  const userId = e.userId.value.trim() || '@daily_moment';
+  const caption = e.caption.value.trim() || '게시글 본문이 여기에 표시됩니다.';
+  const imageUrl = selectedImageUrl();
   e.livePreview.innerHTML = '';
 
   if (type === 'chat') {
-    const wrap = document.createElement('div'); wrap.className = 'mock-chat';
-    const head = document.createElement('div'); head.className = 'mock-chat-head';
-    head.innerHTML = `<strong>${title}</strong><div class="helper">${e.publisherName.value.trim() || '이미지 게시자'} · ${e.ownerName.value.trim() || '게시판 주인'}</div>`;
-    wrap.append(head);
-    const body = document.createElement('div'); body.className = 'mock-chat-body';
-    const count = Math.max(1, objectUrls.length);
-    for (let i=0;i<Math.min(count,3);i++) {
-      const row=document.createElement('div'); row.className='mock-chat-message';
-      row.innerHTML=`<span class="sender">${e.publisherName.value.trim() || '이미지 게시자'}</span>`;
-      const bubble=document.createElement('div'); bubble.className='bubble left';
-      if(objectUrls[i]) bubble.innerHTML=`<img src="${objectUrls[i]}" alt=""><div>${i+1}번째 이미지 메시지입니다.</div>`;
-      else bubble.textContent='게시자가 채팅할 때 이미지가 한 장씩 첨부됩니다.';
-      row.append(bubble); body.append(row);
-    }
-    const right=document.createElement('div'); right.className='bubble right'; right.textContent='게시판 주인의 답변입니다.'; body.append(right);
-    wrap.append(body); e.livePreview.append(wrap); return;
+    const wrap = document.createElement('section');
+    wrap.className = 'preview-chat-card';
+    const imageMessage = imageUrl ? `<button class="preview-message-image"><img src="${imageUrl}" alt="채팅 첨부 이미지"></button>` : '';
+    wrap.innerHTML = `<header><div><h1>${title}</h1><p>${publisher} · ${owner}</p></div><b>10 / 10</b></header>
+      <div class="preview-messages">
+        <div class="preview-msg publisher"><span class="sender-name">${publisher}</span><div class="preview-message-row"><div class="preview-bubble">${imageMessage}<p>게시자가 보내는 메시지입니다.</p></div><time>19:24</time></div></div>
+        <div class="preview-msg owner"><span class="sender-name">${owner}</span><div class="preview-message-row"><div class="preview-bubble"><p>게시판 주인의 답변입니다.</p></div><time>19:25</time></div></div>
+      </div>
+      <footer class="preview-chat-controls"><div class="preview-roles"><button class="active">${publisher}</button><button>${owner}</button></div><form><textarea disabled>메시지 입력</textarea><button type="button">전송</button></form></footer>`;
+    e.livePreview.append(wrap); return;
   }
 
   if (type === 'camera') {
     const wrap=document.createElement('div'); wrap.className='preview-camera-frame';
-    const imageUrl=selectedImageUrl();
     wrap.innerHTML=`<div class="preview-camera-stage">
       <div class="preview-photo-frame">
         ${imageUrl?`<img class="preview-camera-photo" src="${imageUrl}" alt="촬영 이미지">`:'<div class="preview-camera-placeholder">이미지를 선택해 주세요.</div>'}
@@ -249,14 +248,10 @@ function renderLivePreview() {
     e.livePreview.append(wrap); return;
   }
 
-  const wrap=document.createElement('div'); wrap.className='mock-feed';
-  const head=document.createElement('div'); head.className='mock-feed-head';
-  head.innerHTML=`<div class="avatar"></div><div><strong>${e.displayName.value.trim()||'오늘의 기록'}</strong><div class="helper">${e.userId.value.trim()||'@daily_moment'} · 방금 전</div></div>`;
-  wrap.append(head,makeImageOrPlaceholder());
-  const box=document.createElement('div'); box.className='mock-feed-copy';
-  const icons=['♡','○']; if(e.showBookmark.checked) icons.push('⇩');
-  box.innerHTML=`<div class="mock-feed-actions">${icons.join(' ')}</div><strong>좋아요 수는 자동 결정</strong><p><b>${e.displayName.value.trim()||'오늘의 기록'}</b> ${e.caption.value.trim()||'게시글 본문이 여기에 표시됩니다.'}</p>${e.showComments.checked?'<div class="mock-feed-comment"><b>mood_archive</b> 분위기 너무 좋다…</div>':''}`;
-  wrap.append(box); e.livePreview.append(wrap);
+  const wrap=document.createElement('section'); wrap.className='preview-sns-shell';
+  const slides=(objectUrls.length?objectUrls:['']).map((url,i)=>`<div class="preview-sns-slide">${url?`<img src="${url}" alt="게시 이미지 ${i+1}">`:'<div class="preview-sns-placeholder">이미지를 선택해 주세요.</div>'}</div>`).join('');
+  wrap.innerHTML=`<div class="preview-sns-top"><b><span>✦</span>Moment</b><div>♡</div></div><main class="preview-sns-feed"><article class="preview-sns-post"><header>${imageUrl?`<img src="${imageUrl}">`:'<div class="preview-avatar"></div>'}<div><b>${displayName}</b><span>${userId} · 방금 전</span></div><strong>•••</strong></header><div class="preview-sns-media"><div class="new-badge">NEW POST</div><button class="preview-sns-arrow left">‹</button><div class="preview-sns-track">${slides}</div><button class="preview-sns-arrow right">›</button><div class="preview-sns-counter">1 / ${Math.max(1,objectUrls.length)}</div></div><div class="preview-sns-body"><div class="preview-sns-comments">${e.showComments.checked?'<div><b>mood_archive</b> ✧･ﾟ분위기 진짜 최고예요 (˶ᵔ ᵕ ᵔ˶)♡</div><div><b>soft_day</b> 저장 완료 𓂃📌⋆｡°</div>':''}</div><div class="preview-sns-info"><div class="preview-sns-actions"><button>♡</button><button>○</button>${e.showBookmark.checked?'<button class="bookmark">⇩</button>':''}</div><b>좋아요 128개</b><p><b>${displayName}</b> ${caption}</p><time>방금 전</time></div></div></article></main></section>`;
+  e.livePreview.append(wrap);
 }
 function renderFilePreview() {
   clearObjectUrls();
@@ -297,7 +292,7 @@ e.lock.onclick = () => {
   showLogin();
 };
 
-e.roomTypeInputs.forEach(input => input.addEventListener('change', syncConditionalFields));
+e.roomTypeInputs.forEach(input => input.addEventListener('change', () => { setCode(); syncConditionalFields(); }));
 e.regenerateCode.onclick = setCode;
 e.images.onchange = renderFilePreview;
 [e.titleInput, e.publisherName, e.ownerName, e.displayName, e.userId, e.caption, e.showGrid, e.showStickers, e.showMeta, e.shutterSound, e.allowDownload, e.showComments, e.showBookmark].forEach(input => input.addEventListener('input', renderLivePreview));
