@@ -15,14 +15,38 @@ async function downloadOriginal(img){try{const r=await fetch(img.url,{cache:'no-
 function renderFeed(){
   const c=data.room.config||{},imgs=data.images||[];
   const commentPool=[
-    ['mood_archive','분위기 너무 좋다…'],['soft_day','사진 색감이 정말 예뻐요'],['daily_note','이 장면 저장해두고 싶네요'],
-    ['cloudy_page','오늘 분위기랑 딱 어울려요'],['tiny_record','구도가 정말 안정적이에요'],['afterglow_','빛이 너무 예쁘게 들어왔네요'],
-    ['slow_weekend','한참 보게 되는 사진이에요'],['film_note','필름 카메라 느낌이 나요'],['violet_hour','색 조합이 완벽해요'],
-    ['room_404','이건 배경화면 각인데요'],['still_moment','표정이 자연스러워서 좋아요'],['summer_letter','사진에서 온도가 느껴져요'],
-    ['mono_log','디테일이 살아 있네요'],['night_walk','분위기 장인…'],['peach_milk','너무 귀엽고 사랑스러워요'],
-    ['blue_archive','다음 사진도 궁금해요'],['lazy_sunday','편안한 느낌이 정말 좋아요'],['paper_moon','조명 연출이 멋져요'],
-    ['little_star','오늘 본 사진 중 제일 좋아요'],['warm_frame','색감이 포근하네요'],['quiet_scene','말 없이 오래 보고 싶어요'],
-    ['daydreamer','이 분위기 그대로 간직하고 싶다'],['soft_focus','사진 넘길 때마다 느낌이 달라요'],['memory_box','추억 한 장 같은 느낌이에요']
+    ['mood_archive','분위기 뭐야… 너무 좋잖아 (´｡• ᵕ •｡`) ♡'],
+    ['soft_day','색감이 완전 취향저격 ✦˖°'],
+    ['daily_note','이 장면 저장해두고 싶다…📌'],
+    ['cloudy_page','오늘 무드랑 찰떡이에요 𓂃☁︎'],
+    ['tiny_record','구도 진짜 안정적이다 ｡ﾟ+.(･∀･)ﾟ+.ﾟ'],
+    ['afterglow_','빛이 사르르 들어온다… ✧˖°'],
+    ['slow_weekend','한참 멍하니 보게 돼요 (｡•́‿•̀｡)'],
+    ['film_note','필름 카메라 감성 미쳤다 🎞️⋆｡°✩'],
+    ['violet_hour','색 조합이 완벽해요…♡'],
+    ['room_404','배경화면 각이다 [저장 완료] ⌁'],
+    ['still_moment','표정이 너무 자연스러워서 좋아요 ˶ᵔ ᵕ ᵔ˶'],
+    ['summer_letter','사진에서 온도가 느껴져요 ☀︎₊˚'],
+    ['mono_log','디테일 하나하나 살아있네…!'],
+    ['night_walk','분위기 장인 등장 ✦( •̀ᴗ•́ )و'],
+    ['peach_milk','너무 귀엽고 사랑스러워요 ૮₍ ˶ᵔ ᵕ ᵔ˶ ₎ა'],
+    ['blue_archive','다음 사진도 궁금해요 →→'],
+    ['lazy_sunday','편안한 느낌 너무 좋다 𓈒𓏸'],
+    ['paper_moon','조명 연출 최고…🌙✧'],
+    ['little_star','오늘 본 사진 중 1등 ★彡'],
+    ['warm_frame','색감이 포근포근해요 (づ｡◕‿‿◕｡)づ'],
+    ['quiet_scene','말 없이 오래 보고 싶은 장면… 𓂃'],
+    ['daydreamer','이 분위기 그대로 박제하고 싶다 ⟡'],
+    ['soft_focus','넘길 때마다 느낌이 달라서 재밌어요 ↻'],
+    ['memory_box','추억 한 장 꺼내 본 기분 📷♡'],
+    ['pixel_bloom','헉… 첫 장부터 심장에 치명타 (๑•́ ₃ •̀๑)'],
+    ['zero_hour','이건 반칙이지… 너무 예뻐요 !!'],
+    ['starry_zip','✨✨✨ 말이 필요 없다'],
+    ['cozy_signal','좋아요 버튼 한 번으로 부족해요 ♡♡♡'],
+    ['mint_letter','스크롤 멈추게 만드는 사진이다 〰︎'],
+    ['noon_dream','분위기 한 스푼, 감성 두 스푼 ₊˚⊹'],
+    ['tiny_orbit','여기서 못 나가겠어요…( ˘͈ ᵕ ˘͈ )'],
+    ['archive_7','사진마다 이야기가 있는 느낌 📖✦']
   ];
   if(!imgs.length){app.innerHTML='<div class="empty">첨부 이미지가 없습니다.</div>';return}
   app.innerHTML=`<section class="sns-shell"><div class="sns-top"><b><span>✦</span>Moment</b><div>♡</div></div><main class="sns-feed"><article class="sns-post is-building"><header><img id="snsAvatar" src="${imgs[0].url}"><div><b>${esc(c.displayName||'오늘의 기록')}</b><span>${esc(c.userId||'@daily_moment')} · 방금 전</span></div><strong>•••</strong></header><div class="sns-media" id="snsMedia"><div class="new-badge">NEW POST</div><button class="sns-arrow sns-prev" id="snsPrev" aria-label="이전 이미지">‹</button><div class="sns-track" id="snsTrack">${imgs.map((img,i)=>`<div class="sns-slide"><img src="${img.url}" alt="게시 이미지 ${i+1}"></div>`).join('')}</div><button class="sns-arrow sns-next" id="snsNext" aria-label="다음 이미지">›</button><div class="scan"></div><div class="sns-counter" id="snsCounter">1 / ${imgs.length}</div></div><div class="sns-body"><div class="sns-actions"><button class="like" aria-label="좋아요">♡</button><button class="comment-btn" aria-label="댓글">○</button><button class="bookmark" aria-label="원본 이미지 저장">⇩</button></div><div class="sns-likes">좋아요 <span>${Number(c.likeCount||0)}</span>개</div><p><b>${esc(c.displayName||'오늘의 기록')}</b> ${esc(c.caption||'')}</p><div class="sns-comments"></div><time>방금 전</time></div></article></main><div id="snsToast" class="sns-toast"></div></section>`;

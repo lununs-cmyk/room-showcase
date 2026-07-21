@@ -78,7 +78,7 @@ function fail(err) {
 const roomUrl = id => `${location.origin}/?room=${encodeURIComponent(id)}`;
 
 function iframeHeight(type) {
-  return type === 'camera' ? 780 : type === 'feed' ? 780 : 780;
+  return 800;
 }
 
 function iframeCode(url, type) {
@@ -232,11 +232,21 @@ function renderLivePreview() {
   }
 
   if (type === 'camera') {
-    const wrap=document.createElement('div'); wrap.className='mock-camera';
-    const media=makeImageOrPlaceholder(); media.classList.add('preview-blur'); wrap.append(media);
-    const overlay=document.createElement('div'); overlay.className='camera-overlay';
-    overlay.innerHTML=`<div class="camera-top"><span>⚡</span><strong>${title}</strong><span>◌</span></div>${e.showGrid.checked?'<div class="camera-grid-lines"></div><div class="camera-focus">＋</div>':''}<div class="camera-bottom"><div class="helper">${objectUrls.length||0}장의 사진 · 촬영 후 전환 가능</div><div class="shutter"></div><div><span class="preview-chip">블러</span><span class="preview-chip">플래시</span><span class="preview-chip">샤프닝</span>${e.showStickers.checked?'<span class="preview-chip">스티커</span>':''}${e.showMeta.checked?'<span class="preview-chip">EXIF</span>':''}</div></div>`;
-    wrap.append(overlay); e.livePreview.append(wrap); return;
+    const wrap=document.createElement('div'); wrap.className='preview-camera-frame';
+    const imageUrl=selectedImageUrl();
+    wrap.innerHTML=`<div class="preview-camera-stage">
+      <div class="preview-photo-frame">
+        ${imageUrl?`<img class="preview-camera-photo" src="${imageUrl}" alt="촬영 이미지">`:'<div class="preview-camera-placeholder">이미지를 선택해 주세요.</div>'}
+        ${e.showGrid.checked?'<div class="preview-camera-grid"></div><div class="preview-camera-focus"></div>':''}
+      </div>
+      <div class="preview-camera-top"><span>⚡</span><b>${title}</b><span>◌</span></div>
+      <div class="preview-camera-nav"><button>‹</button><span>${objectUrls.length?`1 / ${objectUrls.length}`:'0 / 0'}</span><button>›</button></div>
+      <div class="preview-camera-bottom">
+        <div class="preview-mode-row">${Array.from({length:Math.max(1,objectUrls.length)},(_,i)=>`<span class="${i===0?'active':''}">포토${i+1}</span>`).join('')}</div>
+        <div class="preview-camera-controls"><div class="preview-thumb" style="${imageUrl?`background-image:url('${imageUrl}')`:''}"></div><div class="preview-shutter"></div><div class="preview-flip">↻</div></div>
+      </div>
+    </div>`;
+    e.livePreview.append(wrap); return;
   }
 
   const wrap=document.createElement('div'); wrap.className='mock-feed';
