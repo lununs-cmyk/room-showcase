@@ -325,6 +325,14 @@ e.images.onchange = renderFilePreview;
 e.createForm.onsubmit = async event => {
   event.preventDefault();
   if (e.images.files.length > 5) return alert('이미지는 최대 5장입니다.');
+  if (currentType() === 'chat') {
+    const limitInput = e.createForm.querySelector('[name="messageLimit"]');
+    const imageCount = e.images.files.length;
+    if (Number(limitInput.value) < imageCount) {
+      limitInput.value = imageCount;
+      return alert(`채팅 제한은 첨부 이미지 수(${imageCount}) 이상이어야 합니다. 제한값을 ${imageCount}회로 조정했습니다.`);
+    }
+  }
   const form = new FormData(e.createForm);
   e.createButton.disabled = true;
   try {
