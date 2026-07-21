@@ -10,6 +10,7 @@ const e = {
   livePreview: $('#livePreview'), previewTypeName: $('#previewTypeName'),
   created: $('#created'), createdUrl: $('#createdUrl'), createdOwnerUrl: $('#createdOwnerUrl'), iframe: $('#iframeCode'), ownerIframe: $('#ownerIframeCode'), openCreated: $('#openCreated'), openCreatedOwner: $('#openCreatedOwner'), copyCreated: $('#copyCreated'), copyCreatedOwner: $('#copyCreatedOwner'), copyIframe: $('#copyIframe'), copyOwnerIframe: $('#copyOwnerIframe'),
   rooms: $('#rooms'), count: $('#count'), refresh: $('#refresh'), tpl: $('#roomTpl'), toast: $('#toast'), createButton: $('#createButton'),
+  createdPrimaryUrlWrap: $('#createdPrimaryUrlWrap'), createdPrimaryActions: $('#createdPrimaryActions'), createdOwnerUrlWrap: $('#createdOwnerUrlWrap'), createdOwnerActions: $('#createdOwnerActions'), createdPrimaryIframeWrap: $('#createdPrimaryIframeWrap'), createdOwnerIframeWrap: $('#createdOwnerIframeWrap'), copyOwnerIframeWrap: $('#copyOwnerIframeWrap'),
   modal: $('#iframeModal'), modalIframe: $('#modalIframe'), modalIframeCode: $('#modalIframeCode'), modalRoomName: $('#modalRoomName'), copyModalIframe: $('#copyModalIframe'), openModalRoom: $('#openModalRoom')
 };
 
@@ -351,12 +352,19 @@ e.createForm.onsubmit = async event => {
     const payload = await api({ method: 'POST', body: form });
     const url = roomUrl(payload.room.id, payload.room.room_type==='chat'?'publisher':'');
     const ownerUrl = payload.room.room_type==='chat' ? ownerRoomUrl(payload.room.id,payload.room.owner_access_key) : url;
+    const isChat = payload.room.room_type === 'chat';
     e.createdUrl.value = url;
     e.createdOwnerUrl.value = ownerUrl;
     e.iframe.value = iframeCode(url, payload.room.room_type);
     e.ownerIframe.value = iframeCode(ownerUrl, payload.room.room_type);
     e.openCreated.href = url;
     e.openCreatedOwner.href = ownerUrl;
+    e.createdPrimaryUrlWrap.firstChild.textContent = isChat ? '게시자용 주소' : '방 주소';
+    e.copyCreated.textContent = isChat ? '게시자 주소 복사' : '방 주소 복사';
+    e.openCreated.textContent = isChat ? '게시자 화면 열기' : '방 열기';
+    e.createdPrimaryIframeWrap.firstChild.textContent = isChat ? '게시자용 iframe' : 'iframe';
+    e.copyIframe.textContent = isChat ? '게시자 iframe 복사' : 'iframe 복사';
+    [e.createdOwnerUrlWrap,e.createdOwnerActions,e.createdOwnerIframeWrap,e.copyOwnerIframeWrap].forEach(node=>node.hidden=!isChat);
     e.created.hidden = false;
     e.createForm.reset();
     e.roomTypeInputs[0].checked = true;

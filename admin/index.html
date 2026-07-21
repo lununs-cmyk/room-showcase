@@ -110,14 +110,14 @@
 
       <div id="created" class="created" hidden>
         <h3>방 생성 완료</h3>
-        <label>게시자용 주소<input id="createdUrl" readonly></label>
-        <div class="button-row"><button type="button" id="copyCreated">게시자 주소 복사</button><a id="openCreated" class="ghost-link" target="_blank" rel="noopener">게시자 화면 열기</a></div>
-        <label>게시판 주인용 주소<input id="createdOwnerUrl" readonly></label>
-        <div class="button-row"><button type="button" id="copyCreatedOwner">주인 주소 복사</button><a id="openCreatedOwner" class="ghost-link" target="_blank" rel="noopener">주인 화면 열기</a></div>
-        <label>게시자용 iframe<textarea id="iframeCode" readonly></textarea></label>
+        <label id="createdPrimaryUrlWrap">게시자용 주소<input id="createdUrl" readonly></label>
+        <div id="createdPrimaryActions" class="button-row"><button type="button" id="copyCreated">게시자 주소 복사</button><a id="openCreated" class="ghost-link" target="_blank" rel="noopener">게시자 화면 열기</a></div>
+        <label id="createdOwnerUrlWrap">게시판 주인용 주소<input id="createdOwnerUrl" readonly></label>
+        <div id="createdOwnerActions" class="button-row"><button type="button" id="copyCreatedOwner">주인 주소 복사</button><a id="openCreatedOwner" class="ghost-link" target="_blank" rel="noopener">주인 화면 열기</a></div>
+        <label id="createdPrimaryIframeWrap">게시자용 iframe<textarea id="iframeCode" readonly></textarea></label>
         <button type="button" id="copyIframe">게시자 iframe 복사</button>
-        <label>게시판 주인용 iframe<textarea id="ownerIframeCode" readonly></textarea></label>
-        <button type="button" id="copyOwnerIframe">주인 iframe 복사</button>
+        <label id="createdOwnerIframeWrap">게시판 주인용 iframe<textarea id="ownerIframeCode" readonly></textarea></label>
+        <button id="copyOwnerIframeWrap" type="button">주인 iframe 복사</button>
       </div>
     </section>
 
