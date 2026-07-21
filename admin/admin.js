@@ -6,6 +6,7 @@ const e = {
   createForm: $('#createForm'), roomTypeInputs: $$('input[name="roomType"]'), chatFields: $('#chatFields'), cameraFields: $('#cameraFields'), feedFields: $('#feedFields'),
   images: $('#images'), filePreview: $('#filePreview'), roomCode: $('#roomCode'), regenerateCode: $('#regenerateCode'),
   titleInput: $('#titleInput'), publisherName: $('#publisherName'), ownerName: $('#ownerName'), displayName: $('#displayName'), userId: $('#userId'), caption: $('#caption'),
+  showGrid: $('#showGrid'), showStickers: $('#showStickers'), showMeta: $('#showMeta'), shutterSound: $('#shutterSound'), allowDownload: $('#allowDownload'), showComments: $('#showComments'), showShare: $('#showShare'), showBookmark: $('#showBookmark'),
   livePreview: $('#livePreview'), previewTypeName: $('#previewTypeName'),
   created: $('#created'), createdUrl: $('#createdUrl'), iframe: $('#iframeCode'), openCreated: $('#openCreated'), copyCreated: $('#copyCreated'), copyIframe: $('#copyIframe'),
   rooms: $('#rooms'), count: $('#count'), refresh: $('#refresh'), tpl: $('#roomTpl'), toast: $('#toast'), createButton: $('#createButton'),
@@ -211,73 +212,41 @@ function renderLivePreview() {
   e.livePreview.innerHTML = '';
 
   if (type === 'chat') {
-    const wrap = document.createElement('div');
-    wrap.className = 'mock-chat';
-    const head = document.createElement('div');
-    head.className = 'mock-chat-head';
-    const h = document.createElement('strong');
-    h.textContent = title;
-    const sub = document.createElement('div');
-    sub.className = 'helper';
-    sub.textContent = `${e.publisherName.value.trim() || '이미지 게시자'} · ${e.ownerName.value.trim() || '게시판 주인'}`;
-    head.append(h, sub);
-    wrap.append(head, makeImageOrPlaceholder());
-    const body = document.createElement('div');
-    body.className = 'mock-chat-body';
-    const left = document.createElement('div');
-    left.className = 'bubble left';
-    left.textContent = '이미지에 대한 첫 번째 메시지입니다.';
-    const right = document.createElement('div');
-    right.className = 'bubble right';
-    right.textContent = '답변은 이렇게 표시됩니다.';
-    body.append(left, right);
-    wrap.append(body);
-    e.livePreview.append(wrap);
-    return;
+    const wrap = document.createElement('div'); wrap.className = 'mock-chat';
+    const head = document.createElement('div'); head.className = 'mock-chat-head';
+    head.innerHTML = `<strong>${title}</strong><div class="helper">${e.publisherName.value.trim() || '이미지 게시자'} · ${e.ownerName.value.trim() || '게시판 주인'}</div>`;
+    wrap.append(head);
+    const body = document.createElement('div'); body.className = 'mock-chat-body';
+    const count = Math.max(1, objectUrls.length);
+    for (let i=0;i<Math.min(count,3);i++) {
+      const row=document.createElement('div'); row.className='mock-chat-message';
+      row.innerHTML=`<span class="sender">${e.publisherName.value.trim() || '이미지 게시자'}</span>`;
+      const bubble=document.createElement('div'); bubble.className='bubble left';
+      if(objectUrls[i]) bubble.innerHTML=`<img src="${objectUrls[i]}" alt=""><div>${i+1}번째 이미지 메시지입니다.</div>`;
+      else bubble.textContent='게시자가 채팅할 때 이미지가 한 장씩 첨부됩니다.';
+      row.append(bubble); body.append(row);
+    }
+    const right=document.createElement('div'); right.className='bubble right'; right.textContent='게시판 주인의 답변입니다.'; body.append(right);
+    wrap.append(body); e.livePreview.append(wrap); return;
   }
 
   if (type === 'camera') {
-    const wrap = document.createElement('div');
-    wrap.className = 'mock-camera';
-    wrap.append(makeImageOrPlaceholder());
-    const overlay = document.createElement('div');
-    overlay.className = 'camera-overlay';
-    overlay.innerHTML = '<div class="camera-top"><span>⚡</span><strong></strong><span>⚙</span></div><div class="camera-focus">＋</div><div class="camera-bottom"><div class="helper">사진 · 인물 · 비디오</div><div class="shutter"></div></div>';
-    $('strong', overlay).textContent = title;
-    wrap.append(overlay);
-    e.livePreview.append(wrap);
-    return;
+    const wrap=document.createElement('div'); wrap.className='mock-camera';
+    const media=makeImageOrPlaceholder(); media.classList.add('preview-blur'); wrap.append(media);
+    const overlay=document.createElement('div'); overlay.className='camera-overlay';
+    overlay.innerHTML=`<div class="camera-top"><span>⚡</span><strong>${title}</strong><span>◌</span></div>${e.showGrid.checked?'<div class="camera-grid-lines"></div><div class="camera-focus">＋</div>':''}<div class="camera-bottom"><div class="helper">${objectUrls.length||0}장의 사진 · 촬영 후 전환 가능</div><div class="shutter"></div><div><span class="preview-chip">블러</span><span class="preview-chip">플래시</span><span class="preview-chip">샤프닝</span>${e.showStickers.checked?'<span class="preview-chip">스티커</span>':''}${e.showMeta.checked?'<span class="preview-chip">EXIF</span>':''}</div></div>`;
+    wrap.append(overlay); e.livePreview.append(wrap); return;
   }
 
-  const wrap = document.createElement('div');
-  wrap.className = 'mock-feed';
-  const head = document.createElement('div');
-  head.className = 'mock-feed-head';
-  const avatar = document.createElement('div');
-  avatar.className = 'avatar';
-  const user = document.createElement('div');
-  const name = document.createElement('strong');
-  name.textContent = e.displayName.value.trim() || '오늘의 기록';
-  const id = document.createElement('div');
-  id.className = 'helper';
-  id.textContent = e.userId.value.trim() || '@daily_moment';
-  user.append(name, id);
-  head.append(avatar, user);
-  wrap.append(head, makeImageOrPlaceholder());
-  const copyBox = document.createElement('div');
-  copyBox.className = 'mock-feed-copy';
-  const actions = document.createElement('div');
-  actions.className = 'mock-feed-actions';
-  actions.textContent = '♡ ◯ ↗';
-  const likes = document.createElement('strong');
-  likes.textContent = '좋아요 수는 자동 결정';
-  const body = document.createElement('p');
-  body.textContent = e.caption.value.trim() || '게시글 본문이 여기에 표시됩니다.';
-  copyBox.append(actions, likes, body);
-  wrap.append(copyBox);
-  e.livePreview.append(wrap);
+  const wrap=document.createElement('div'); wrap.className='mock-feed';
+  const head=document.createElement('div'); head.className='mock-feed-head';
+  head.innerHTML=`<div class="avatar"></div><div><strong>${e.displayName.value.trim()||'오늘의 기록'}</strong><div class="helper">${e.userId.value.trim()||'@daily_moment'} · 방금 전</div></div>`;
+  wrap.append(head,makeImageOrPlaceholder());
+  const box=document.createElement('div'); box.className='mock-feed-copy';
+  const icons=['♡','○']; if(e.showShare.checked) icons.push('⌁'); if(e.showBookmark.checked) icons.push('⌑');
+  box.innerHTML=`<div class="mock-feed-actions">${icons.join(' ')}</div><strong>좋아요 수는 자동 결정</strong><p><b>${e.displayName.value.trim()||'오늘의 기록'}</b> ${e.caption.value.trim()||'게시글 본문이 여기에 표시됩니다.'}</p>${e.showComments.checked?'<div class="mock-feed-comment"><b>mood_archive</b> 분위기 너무 좋다…</div>':''}`;
+  wrap.append(box); e.livePreview.append(wrap);
 }
-
 function renderFilePreview() {
   clearObjectUrls();
   const files = [...e.images.files];
@@ -320,7 +289,7 @@ e.lock.onclick = () => {
 e.roomTypeInputs.forEach(input => input.addEventListener('change', syncConditionalFields));
 e.regenerateCode.onclick = setCode;
 e.images.onchange = renderFilePreview;
-[e.titleInput, e.publisherName, e.ownerName, e.displayName, e.userId, e.caption].forEach(input => input.addEventListener('input', renderLivePreview));
+[e.titleInput, e.publisherName, e.ownerName, e.displayName, e.userId, e.caption, e.showGrid, e.showStickers, e.showMeta, e.shutterSound, e.allowDownload, e.showComments, e.showShare, e.showBookmark].forEach(input => input.addEventListener('input', renderLivePreview));
 
 e.createForm.onsubmit = async event => {
   event.preventDefault();
