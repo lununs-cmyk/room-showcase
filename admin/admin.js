@@ -147,9 +147,10 @@ function renderRooms(rooms) {
     };
 
     if (room.room_type !== 'chat') {
-      $('.limit-label', node).hidden = true;
-      $('.update', node).hidden = true;
-      $('.reset', node).hidden = true;
+      $('.limit-label', node).remove();
+      $('.update', node).remove();
+      $('.reset', node).remove();
+      $('.controls', node).classList.add('non-chat-controls');
     }
     e.rooms.appendChild(node);
   }
