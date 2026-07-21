@@ -85,6 +85,17 @@ export async function onRequestPost(context) {
       );
     }
 
+    if (payload.senderRole === "owner") {
+      const expected = String(result.room.config?.ownerAccessKey || "");
+      const supplied = String(payload.ownerKey || "");
+      if (!expected || supplied.length !== expected.length) {
+        return error("OWNER_ACCESS_DENIED", "게시판 주인용 링크가 올바르지 않습니다.", 403);
+      }
+      let diff = 0;
+      for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ supplied.charCodeAt(i);
+      if (diff !== 0) return error("OWNER_ACCESS_DENIED", "게시판 주인용 링크가 올바르지 않습니다.", 403);
+    }
+
     const valid = validateMessage(payload.content);
     if (!valid.ok) {
       return error("INVALID_MESSAGE", valid.message, 400);

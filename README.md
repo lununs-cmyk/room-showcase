@@ -99,3 +99,7 @@ D1에 `migrations/0001_initial.sql` 전체를 실행하고 위 바인딩 3개를
 - Optional SNS avatar upload, falling back to the first post image.
 - Camera image selection uses Photo text buttons only.
 - Chat file box with gallery and bulk download.
+
+
+## v5.3 채팅 역할별 링크
+채팅방은 같은 대화 데이터를 공유하는 게시자용 링크와 게시판 주인용 비밀 링크를 각각 발급합니다. 게시판 주인용 링크의 key 값은 외부에 공개하지 마세요. 파일박스는 두 화면 모두에서 사용할 수 있습니다.

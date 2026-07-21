@@ -5,10 +5,10 @@ const e = {
   login: $('#login'), dashboard: $('#dashboard'), loginForm: $('#loginForm'), password: $('#password'), loginError: $('#loginError'), lock: $('#lock'),
   createForm: $('#createForm'), roomTypeInputs: $$('input[name="roomType"]'), chatFields: $('#chatFields'), cameraFields: $('#cameraFields'), feedFields: $('#feedFields'),
   images: $('#images'), filePreview: $('#filePreview'), roomCode: $('#roomCode'), regenerateCode: $('#regenerateCode'),
-  titleInput: $('#titleInput'), publisherName: $('#publisherName'), ownerName: $('#ownerName'), displayName: $('#displayName'), userId: $('#userId'), caption: $('#caption'), avatar: $('#avatar'),
+  titleInput: $('#titleInput'), publisherName: $('#publisherName'), ownerName: $('#ownerName'), publisherAvatar: $('#publisherAvatar'), ownerAvatar: $('#ownerAvatar'), displayName: $('#displayName'), userId: $('#userId'), caption: $('#caption'), avatar: $('#avatar'),
   showGrid: $('#showGrid'), showStickers: $('#showStickers'), showMeta: $('#showMeta'), shutterSound: $('#shutterSound'), allowDownload: $('#allowDownload'), showComments: $('#showComments'), showBookmark: $('#showBookmark'),
   livePreview: $('#livePreview'), previewTypeName: $('#previewTypeName'),
-  created: $('#created'), createdUrl: $('#createdUrl'), iframe: $('#iframeCode'), openCreated: $('#openCreated'), copyCreated: $('#copyCreated'), copyIframe: $('#copyIframe'),
+  created: $('#created'), createdUrl: $('#createdUrl'), createdOwnerUrl: $('#createdOwnerUrl'), iframe: $('#iframeCode'), ownerIframe: $('#ownerIframeCode'), openCreated: $('#openCreated'), openCreatedOwner: $('#openCreatedOwner'), copyCreated: $('#copyCreated'), copyCreatedOwner: $('#copyCreatedOwner'), copyIframe: $('#copyIframe'), copyOwnerIframe: $('#copyOwnerIframe'),
   rooms: $('#rooms'), count: $('#count'), refresh: $('#refresh'), tpl: $('#roomTpl'), toast: $('#toast'), createButton: $('#createButton'),
   modal: $('#iframeModal'), modalIframe: $('#modalIframe'), modalIframeCode: $('#modalIframeCode'), modalRoomName: $('#modalRoomName'), copyModalIframe: $('#copyModalIframe'), openModalRoom: $('#openModalRoom')
 };
@@ -17,6 +17,8 @@ let password = sessionStorage.getItem('chat-admin-password') || '';
 let timer;
 let objectUrls = [];
 let avatarObjectUrl = "";
+let publisherAvatarObjectUrl = "";
+let ownerAvatarObjectUrl = "";
 
 const randomCode = () => {
   const bytes = new Uint8Array(16);
@@ -76,7 +78,8 @@ function fail(err) {
   }
 }
 
-const roomUrl = id => `${location.origin}/?room=${encodeURIComponent(id)}`;
+const roomUrl = (id, role = '') => `${location.origin}/?room=${encodeURIComponent(id)}${role ? `&role=${encodeURIComponent(role)}` : ''}`;
+const ownerRoomUrl = (id,key) => `${roomUrl(id,'owner')}&key=${encodeURIComponent(key||'')}`;
 
 function iframeHeight(type) {
   return 800;
@@ -108,7 +111,7 @@ function renderRooms(rooms) {
 
   for (const room of rooms) {
     const node = e.tpl.content.firstElementChild.cloneNode(true);
-    const url = roomUrl(room.id);
+    const url = roomUrl(room.id, room.room_type === 'chat' ? 'publisher' : '');
     $('h3', node).textContent = room.title;
     $('code', node).textContent = room.id;
     $('.badge', node).textContent = names[room.room_type] || room.room_type;
@@ -116,9 +119,18 @@ function renderRooms(rooms) {
       ? `이미지 ${room.image_count}장 · 메시지 ${room.message_count}/${room.message_limit}`
       : `이미지 ${room.image_count}장 · ${names[room.room_type] || room.room_type}형`;
 
-    $('.open', node).href = url;
-    $('.copy', node).onclick = () => copy(url);
-    $('.iframe-view', node).onclick = () => openIframeModal(room);
+    if (room.room_type === 'chat') {
+      const ownerUrl = ownerRoomUrl(room.id, room.owner_access_key);
+      const actions = $('.room-actions', node);
+      actions.innerHTML = `<a class="ghost-link" target="_blank" rel="noopener" href="${url}">게시자 열기</a><button class="ghost pub-copy">게시자 주소</button><a class="ghost-link" target="_blank" rel="noopener" href="${ownerUrl}">주인 열기</a><button class="ghost owner-copy">주인 주소</button><button class="ghost iframe-view">iframe 확인</button>`;
+      $('.pub-copy', node).onclick=()=>copy(url);
+      $('.owner-copy', node).onclick=()=>copy(ownerUrl);
+      $('.iframe-view', node).onclick=()=>openIframeModal(room,'publisher');
+    } else {
+      $('.open', node).href = url;
+      $('.copy', node).onclick = () => copy(url);
+      $('.iframe-view', node).onclick = () => openIframeModal(room);
+    }
     $('.limit', node).value = room.message_limit;
 
     $('.update', node).onclick = async () => {
@@ -157,8 +169,8 @@ function renderRooms(rooms) {
   }
 }
 
-function openIframeModal(room) {
-  const url = roomUrl(room.id);
+function openIframeModal(room, chatRole = '') {
+  const url = room.room_type==='chat' ? (chatRole==='owner'?ownerRoomUrl(room.id,room.owner_access_key):roomUrl(room.id,'publisher')) : roomUrl(room.id);
   const code = iframeCode(url, room.room_type);
   e.modalRoomName.textContent = `${room.title} · ${room.id}`;
   e.modalIframeCode.value = code;
@@ -189,6 +201,8 @@ function clearObjectUrls() {
   objectUrls = [];
   if (avatarObjectUrl) URL.revokeObjectURL(avatarObjectUrl);
   avatarObjectUrl = '';
+  if (publisherAvatarObjectUrl) URL.revokeObjectURL(publisherAvatarObjectUrl); publisherAvatarObjectUrl='';
+  if (ownerAvatarObjectUrl) URL.revokeObjectURL(ownerAvatarObjectUrl); ownerAvatarObjectUrl='';
 }
 
 function selectedImageUrl() {
@@ -226,12 +240,14 @@ function renderLivePreview() {
     const wrap = document.createElement('section');
     wrap.className = 'preview-chat-card';
     const imageMessage = imageUrl ? `<button class="preview-message-image"><img src="${imageUrl}" alt="채팅 첨부 이미지"></button>` : '';
+    const pubAvatar = publisherAvatarObjectUrl ? `<img src="${publisherAvatarObjectUrl}" alt="">` : `<span class="preview-avatar-fallback publisher-avatar"></span>`;
+    const ownAvatar = ownerAvatarObjectUrl ? `<img src="${ownerAvatarObjectUrl}" alt="">` : `<span class="preview-avatar-fallback owner-avatar"></span>`;
     wrap.innerHTML = `<header><div><h1>${title}</h1><p>${publisher} · ${owner}</p></div><b>10 / 10</b></header>
       <div class="preview-messages">
-        <div class="preview-msg publisher"><span class="sender-name">${publisher}</span><div class="preview-message-row"><div class="preview-bubble">${imageMessage}<p>게시자가 보내는 메시지입니다.</p></div><time>19:24</time></div></div>
-        <div class="preview-msg owner"><span class="sender-name">${owner}</span><div class="preview-message-row"><div class="preview-bubble"><p>게시판 주인의 답변입니다.</p></div><time>19:25</time></div></div>
+        <div class="preview-msg publisher"><div class="preview-chat-avatar">${pubAvatar}</div><div class="preview-msg-content"><span class="sender-name">${publisher}</span><div class="preview-message-row"><div class="preview-bubble">${imageMessage}<p>게시자가 보내는 메시지입니다.</p></div><time>19:24</time></div></div></div>
+        <div class="preview-msg owner"><div class="preview-chat-avatar">${ownAvatar}</div><div class="preview-msg-content"><span class="sender-name">${owner}</span><div class="preview-message-row"><div class="preview-bubble"><p>게시판 주인의 답변입니다.</p></div><time>19:25</time></div></div></div>
       </div>
-      <footer class="preview-chat-controls"><div class="preview-roles"><button class="active">${publisher}</button><button>${owner}</button></div><form><textarea disabled>메시지 입력</textarea><button type="button">전송</button></form></footer>`;
+      <footer class="preview-chat-controls"><form><textarea disabled>메시지 입력</textarea><button type="button">전송</button></form></footer>`;
     e.livePreview.append(wrap); return;
   }
 
@@ -299,6 +315,18 @@ e.lock.onclick = () => {
 e.roomTypeInputs.forEach(input => input.addEventListener('change', () => { setCode(); syncConditionalFields(); }));
 e.regenerateCode.onclick = setCode;
 e.images.onchange = renderFilePreview;
+
+e.publisherAvatar.onchange = () => {
+  if (publisherAvatarObjectUrl) URL.revokeObjectURL(publisherAvatarObjectUrl);
+  publisherAvatarObjectUrl = e.publisherAvatar.files[0] ? URL.createObjectURL(e.publisherAvatar.files[0]) : '';
+  renderLivePreview();
+};
+e.ownerAvatar.onchange = () => {
+  if (ownerAvatarObjectUrl) URL.revokeObjectURL(ownerAvatarObjectUrl);
+  ownerAvatarObjectUrl = e.ownerAvatar.files[0] ? URL.createObjectURL(e.ownerAvatar.files[0]) : '';
+  renderLivePreview();
+};
+
 e.avatar.onchange = () => {
   if (avatarObjectUrl) URL.revokeObjectURL(avatarObjectUrl);
   avatarObjectUrl = e.avatar.files[0] ? URL.createObjectURL(e.avatar.files[0]) : '';
@@ -321,10 +349,14 @@ e.createForm.onsubmit = async event => {
   e.createButton.disabled = true;
   try {
     const payload = await api({ method: 'POST', body: form });
-    const url = roomUrl(payload.room.id);
+    const url = roomUrl(payload.room.id, payload.room.room_type==='chat'?'publisher':'');
+    const ownerUrl = payload.room.room_type==='chat' ? ownerRoomUrl(payload.room.id,payload.room.owner_access_key) : url;
     e.createdUrl.value = url;
+    e.createdOwnerUrl.value = ownerUrl;
     e.iframe.value = iframeCode(url, payload.room.room_type);
+    e.ownerIframe.value = iframeCode(ownerUrl, payload.room.room_type);
     e.openCreated.href = url;
+    e.openCreatedOwner.href = ownerUrl;
     e.created.hidden = false;
     e.createForm.reset();
     e.roomTypeInputs[0].checked = true;
@@ -342,7 +374,9 @@ e.createForm.onsubmit = async event => {
 };
 
 e.copyCreated.onclick = () => copy(e.createdUrl.value);
+e.copyCreatedOwner.onclick = () => copy(e.createdOwnerUrl.value);
 e.copyIframe.onclick = () => copy(e.iframe.value);
+e.copyOwnerIframe.onclick = () => copy(e.ownerIframe.value);
 e.refresh.onclick = load;
 e.copyModalIframe.onclick = () => copy(e.modalIframeCode.value);
 $$('[data-close-modal], .close-modal').forEach(el => el.addEventListener('click', closeIframeModal));
