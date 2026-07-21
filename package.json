@@ -1,0 +1,11 @@
+{
+  "name": "limited-card-chat",
+  "private": true,
+  "type": "module",
+  "scripts": {},
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  },
+  "version": "4.0.0",
+  "description": "Cloudflare Pages multi-format rooms with up to five R2 images"
+}
