@@ -8,7 +8,7 @@ const e = {
   titleInput: $('#titleInput'), publisherName: $('#publisherName'), ownerName: $('#ownerName'), publisherAvatar: $('#publisherAvatar'), ownerAvatar: $('#ownerAvatar'), displayName: $('#displayName'), userId: $('#userId'), caption: $('#caption'), avatar: $('#avatar'),
   showGrid: $('#showGrid'), showStickers: $('#showStickers'), showMeta: $('#showMeta'), shutterSound: $('#shutterSound'), allowDownload: $('#allowDownload'), showComments: $('#showComments'), showBookmark: $('#showBookmark'),
   livePreview: $('#livePreview'), previewTypeName: $('#previewTypeName'),
-  created: $('#created'), createdUrl: $('#createdUrl'), createdOwnerUrl: $('#createdOwnerUrl'), iframe: $('#iframeCode'), ownerIframe: $('#ownerIframeCode'), openCreated: $('#openCreated'), openCreatedOwner: $('#openCreatedOwner'), copyCreated: $('#copyCreated'), copyCreatedOwner: $('#copyCreatedOwner'), copyIframe: $('#copyIframe'), copyOwnerIframe: $('#copyOwnerIframe'),
+  created: $('#created'), createdUrl: $('#createdUrl'), createdOwnerUrl: $('#createdOwnerUrl'), iframe: $('#iframeCode'), ownerIframe: $('#ownerIframeCode'), openCreated: $('#openCreated'), openCreatedOwner: $('#openCreatedOwner'), copyCreated: $('#copyCreated'), copyCreatedOwner: $('#copyCreatedOwner'), copyIframe: $('#copyIframe'), copyOwnerIframe: $('#copyOwnerIframeWrap'),
   rooms: $('#rooms'), count: $('#count'), refresh: $('#refresh'), tpl: $('#roomTpl'), toast: $('#toast'), createButton: $('#createButton'),
   createdPrimaryUrlWrap: $('#createdPrimaryUrlWrap'), createdPrimaryActions: $('#createdPrimaryActions'), createdOwnerUrlWrap: $('#createdOwnerUrlWrap'), createdOwnerActions: $('#createdOwnerActions'), createdPrimaryIframeWrap: $('#createdPrimaryIframeWrap'), createdOwnerIframeWrap: $('#createdOwnerIframeWrap'), copyOwnerIframeWrap: $('#copyOwnerIframeWrap'),
   modal: $('#iframeModal'), modalIframe: $('#modalIframe'), modalIframeCode: $('#modalIframeCode'), modalRoomName: $('#modalRoomName'), copyModalIframe: $('#copyModalIframe'), openModalRoom: $('#openModalRoom')
@@ -384,10 +384,16 @@ e.createForm.onsubmit = async event => {
 e.copyCreated.onclick = () => copy(e.createdUrl.value);
 e.copyCreatedOwner.onclick = () => copy(e.createdOwnerUrl.value);
 e.copyIframe.onclick = () => copy(e.iframe.value);
-e.copyOwnerIframe.onclick = () => copy(e.ownerIframe.value);
+if (e.copyOwnerIframe) e.copyOwnerIframe.onclick = () => copy(e.ownerIframe.value);
 e.refresh.onclick = load;
 e.copyModalIframe.onclick = () => copy(e.modalIframeCode.value);
-$$('[data-close-modal], .close-modal').forEach(el => el.addEventListener('click', closeIframeModal));
+$$('[data-close-modal], .close-modal').forEach(el => el.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); closeIframeModal(); }));
+if (e.modal) e.modal.addEventListener('click', event => {
+  if (event.target.closest('[data-close-modal], .close-modal')) {
+    event.preventDefault();
+    closeIframeModal();
+  }
+});
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && !e.modal.hidden) closeIframeModal(); });
 
 setCode();
