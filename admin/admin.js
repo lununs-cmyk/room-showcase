@@ -8,9 +8,9 @@ const e = {
   titleInput: $('#titleInput'), publisherName: $('#publisherName'), ownerName: $('#ownerName'), publisherAvatar: $('#publisherAvatar'), ownerAvatar: $('#ownerAvatar'), displayName: $('#displayName'), userId: $('#userId'), caption: $('#caption'), avatar: $('#avatar'),
   showGrid: $('#showGrid'), showStickers: $('#showStickers'), showMeta: $('#showMeta'), shutterSound: $('#shutterSound'), allowDownload: $('#allowDownload'), showComments: $('#showComments'), showBookmark: $('#showBookmark'),
   livePreview: $('#livePreview'), previewTypeName: $('#previewTypeName'),
-  created: $('#created'), createdUrl: $('#createdUrl'), createdOwnerUrl: $('#createdOwnerUrl'), iframe: $('#iframeCode'), ownerIframe: $('#ownerIframeCode'), openCreated: $('#openCreated'), openCreatedOwner: $('#openCreatedOwner'), copyCreated: $('#copyCreated'), copyCreatedOwner: $('#copyCreatedOwner'), copyIframe: $('#copyIframe'), copyOwnerIframe: $('#copyOwnerIframeWrap'),
+  created: $('#created'), iframe: $('#iframeCode'), ownerIframe: $('#ownerIframeCode'), copyIframe: $('#copyIframe'), copyOwnerIframe: $('#copyOwnerIframeWrap'),
   rooms: $('#rooms'), count: $('#count'), refresh: $('#refresh'), tpl: $('#roomTpl'), toast: $('#toast'), createButton: $('#createButton'),
-  createdPrimaryUrlWrap: $('#createdPrimaryUrlWrap'), createdPrimaryActions: $('#createdPrimaryActions'), createdOwnerUrlWrap: $('#createdOwnerUrlWrap'), createdOwnerActions: $('#createdOwnerActions'), createdPrimaryIframeWrap: $('#createdPrimaryIframeWrap'), createdOwnerIframeWrap: $('#createdOwnerIframeWrap'), copyOwnerIframeWrap: $('#copyOwnerIframeWrap'),
+  createdPrimaryIframeWrap: $('#createdPrimaryIframeWrap'), createdOwnerIframeWrap: $('#createdOwnerIframeWrap'), copyOwnerIframeWrap: $('#copyOwnerIframeWrap'),
   modal: $('#iframeModal'), modalIframe: $('#modalIframe'), modalIframeCode: $('#modalIframeCode'), modalRoomName: $('#modalRoomName'), copyModalIframe: $('#copyModalIframe'), openModalRoom: $('#openModalRoom')
 };
 
@@ -123,13 +123,10 @@ function renderRooms(rooms) {
     if (room.room_type === 'chat') {
       const ownerUrl = ownerRoomUrl(room.id, room.owner_access_key);
       const actions = $('.room-actions', node);
-      actions.innerHTML = `<a class="ghost-link" target="_blank" rel="noopener" href="${url}">게시자 열기</a><button class="ghost pub-copy">게시자 주소</button><a class="ghost-link" target="_blank" rel="noopener" href="${ownerUrl}">주인 열기</a><button class="ghost owner-copy">주인 주소</button><button class="ghost iframe-view">iframe 확인</button>`;
-      $('.pub-copy', node).onclick=()=>copy(url);
-      $('.owner-copy', node).onclick=()=>copy(ownerUrl);
+      actions.innerHTML = `<a class="ghost-link" target="_blank" rel="noopener" href="${url}">스트리머 열기</a><a class="ghost-link" target="_blank" rel="noopener" href="${ownerUrl}">시청자 열기</a><button class="ghost iframe-view">iframe 확인</button>`;
       $('.iframe-view', node).onclick=()=>openIframeModal(room,'publisher');
     } else {
       $('.open', node).href = url;
-      $('.copy', node).onclick = () => copy(url);
       $('.iframe-view', node).onclick = () => openIframeModal(room);
     }
     $('.limit', node).value = room.message_limit;
@@ -152,7 +149,7 @@ function renderRooms(rooms) {
     };
 
     $('.delete', node).onclick = async () => {
-      if (!confirm('방과 이미지 원본을 삭제할까요?')) return;
+      if (!confirm('방셀과 이미지 원본을 삭제할까요?')) return;
       try {
         await api({ method: 'DELETE', body: JSON.stringify({ roomId: room.id }) });
         toast('삭제했습니다.');
@@ -227,9 +224,9 @@ function makeImageOrPlaceholder(className = '') {
 
 function renderLivePreview() {
   const type = currentType();
-  const title = e.titleInput.value.trim() || '방 제목';
-  const publisher = e.publisherName.value.trim() || '이미지 게시자';
-  const owner = e.ownerName.value.trim() || '게시판 주인';
+  const title = e.titleInput.value.trim() || '방셀 제목';
+  const publisher = e.publisherName.value.trim() || '스트리머';
+  const owner = e.ownerName.value.trim() || '시청자';
   const displayName = e.displayName.value.trim() || '오늘의 기록';
   const userId = e.userId.value.trim() || '@daily_moment';
   const caption = e.caption.value.trim() || '게시글 본문이 여기에 표시됩니다.';
@@ -245,8 +242,8 @@ function renderLivePreview() {
     const ownAvatar = ownerAvatarObjectUrl ? `<img src="${ownerAvatarObjectUrl}" alt="">` : `<span class="preview-avatar-fallback owner-avatar"></span>`;
     wrap.innerHTML = `<header><div><h1>${title}</h1><p>${publisher} · ${owner}</p></div><b>10 / 10</b></header>
       <div class="preview-messages">
-        <div class="preview-msg publisher"><div class="preview-chat-avatar">${pubAvatar}</div><div class="preview-msg-content"><span class="sender-name">${publisher}</span><div class="preview-message-row"><div class="preview-bubble">${imageMessage}<p>게시자가 보내는 메시지입니다.</p></div><time>19:24</time></div></div></div>
-        <div class="preview-msg owner"><div class="preview-chat-avatar">${ownAvatar}</div><div class="preview-msg-content"><span class="sender-name">${owner}</span><div class="preview-message-row"><div class="preview-bubble"><p>게시판 주인의 답변입니다.</p></div><time>19:25</time></div></div></div>
+        <div class="preview-msg publisher"><div class="preview-chat-avatar">${pubAvatar}</div><div class="preview-msg-content"><span class="sender-name">${publisher}</span><div class="preview-message-row"><div class="preview-bubble">${imageMessage}<p>스트리머가 보내는 메시지입니다.</p></div><time>19:24</time></div></div></div>
+        <div class="preview-msg owner"><div class="preview-chat-avatar">${ownAvatar}</div><div class="preview-msg-content"><span class="sender-name">${owner}</span><div class="preview-message-row"><div class="preview-bubble"><p>시청자의 답변입니다.</p></div><time>19:25</time></div></div></div>
       </div>
       <footer class="preview-chat-controls"><form><textarea disabled>메시지 입력</textarea><button type="button">전송</button></form></footer>`;
     e.livePreview.append(wrap); return;
@@ -271,7 +268,7 @@ function renderLivePreview() {
 
   const wrap=document.createElement('section'); wrap.className='preview-sns-shell';
   const slides=(objectUrls.length?objectUrls:['']).map((url,i)=>`<div class="preview-sns-slide">${url?`<img src="${url}" alt="게시 이미지 ${i+1}">`:'<div class="preview-sns-placeholder">이미지를 선택해 주세요.</div>'}</div>`).join('');
-  wrap.innerHTML=`<div class="preview-sns-top"><b><span>✦</span>${title}</b><div>♡</div></div><main class="preview-sns-feed"><article class="preview-sns-post"><header>${avatarUrl?`<img src="${avatarUrl}">`:'<div class="preview-avatar"></div>'}<div><b>${displayName}</b><span>${userId} · 방금 전</span></div><strong>•••</strong></header><div class="preview-sns-media"><div class="new-badge">NEW POST</div><button class="preview-sns-arrow left">‹</button><div class="preview-sns-track">${slides}</div><button class="preview-sns-arrow right">›</button><div class="preview-sns-counter">1 / ${Math.max(1,objectUrls.length)}</div></div><div class="preview-sns-body"><div class="preview-sns-comments">${e.showComments.checked?'<div><b>mood_archive</b> ✧･ﾟ분위기 진짜 최고예요 (˶ᵔ ᵕ ᵔ˶)♡</div><div><b>soft_day</b> 저장 완료 𓂃📌⋆｡°</div>':''}</div><div class="preview-sns-info"><div class="preview-sns-actions"><button>♡</button><button>○</button>${e.showBookmark.checked?'<button class="bookmark">⇩</button>':''}</div><b>좋아요 128개</b><p><b>${displayName}</b> ${caption}</p></div></div></article></main></section>`;
+  wrap.innerHTML=`<div class="preview-sns-top"><b><span>✦</span>${title}</b><div>♡</div></div><main class="preview-sns-feed"><article class="preview-sns-post"><header>${avatarUrl?`<img src="${avatarUrl}">`:'<div class="preview-avatar"></div>'}<div><b>${displayName}</b><span>${userId} · 방금 전</span></div><strong>•••</strong></header><div class="preview-sns-media"><div class="new-badge">NEW POST</div><button class="preview-sns-arrow left">‹</button><div class="preview-sns-track">${slides}</div><button class="preview-sns-arrow right">›</button><div class="preview-sns-counter">1 / ${Math.max(1,objectUrls.length)}</div></div><div class="preview-sns-body"><div class="preview-sns-comments">${e.showComments.checked?'<div><b>mood_archive</b> ✧･ﾟ분위기 진짜 최고예요 (˶ᵔ ᵕ ᵔ˶)♡</div><div><b>soft_day</b> 저장 완료 𓂃📌⋆｡°</div>':''}</div><div class="preview-sns-info"><div class="preview-sns-actions"><button>♡</button><button>○</button>${e.showBookmark.checked?'<button class="bookmark">⇩</button>':''}</div><b>좋아요 86개</b><p><b>${displayName}</b> ${caption}</p></div></div></article></main></section>`;
   e.livePreview.append(wrap);
 }
 function renderFilePreview() {
@@ -353,18 +350,11 @@ e.createForm.onsubmit = async event => {
     const url = roomUrl(payload.room.id, payload.room.room_type==='chat'?'publisher':'');
     const ownerUrl = payload.room.room_type==='chat' ? ownerRoomUrl(payload.room.id,payload.room.owner_access_key) : url;
     const isChat = payload.room.room_type === 'chat';
-    e.createdUrl.value = url;
-    e.createdOwnerUrl.value = ownerUrl;
     e.iframe.value = iframeCode(url, payload.room.room_type);
     e.ownerIframe.value = iframeCode(ownerUrl, payload.room.room_type);
-    e.openCreated.href = url;
-    e.openCreatedOwner.href = ownerUrl;
-    e.createdPrimaryUrlWrap.firstChild.textContent = isChat ? '게시자용 주소' : '방 주소';
-    e.copyCreated.textContent = isChat ? '게시자 주소 복사' : '방 주소 복사';
-    e.openCreated.textContent = isChat ? '게시자 화면 열기' : '방 열기';
-    e.createdPrimaryIframeWrap.firstChild.textContent = isChat ? '게시자용 iframe' : 'iframe';
-    e.copyIframe.textContent = isChat ? '게시자 iframe 복사' : 'iframe 복사';
-    [e.createdOwnerUrlWrap,e.createdOwnerActions,e.createdOwnerIframeWrap,e.copyOwnerIframeWrap].forEach(node=>node.hidden=!isChat);
+    e.createdPrimaryIframeWrap.firstChild.textContent = isChat ? '스트리머용 iframe' : 'iframe';
+    e.copyIframe.textContent = isChat ? '스트리머 iframe 복사' : 'iframe 복사';
+    [e.createdOwnerIframeWrap,e.copyOwnerIframeWrap].forEach(node=>node.hidden=!isChat);
     e.created.hidden = false;
     e.createForm.reset();
     e.roomTypeInputs[0].checked = true;
@@ -381,8 +371,6 @@ e.createForm.onsubmit = async event => {
   }
 };
 
-e.copyCreated.onclick = () => copy(e.createdUrl.value);
-e.copyCreatedOwner.onclick = () => copy(e.createdOwnerUrl.value);
 e.copyIframe.onclick = () => copy(e.iframe.value);
 if (e.copyOwnerIframe) e.copyOwnerIframe.onclick = () => copy(e.ownerIframe.value);
 e.refresh.onclick = load;

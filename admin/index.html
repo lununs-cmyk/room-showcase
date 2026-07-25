@@ -4,69 +4,45 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <title>방 관리</title>
+  <title>방셀 관리</title>
   <link rel="stylesheet" href="/admin/admin.css">
 </head>
 <body>
 <main class="shell">
   <header class="page-header">
-    <div>
-      <small>ROOM SHOWCASE</small>
-      <h1>방 관리</h1>
-      <p>채팅, 카메라, SNS 피드형 방을 생성하고 관리합니다.</p>
-    </div>
+    <div><small>ROOM SHOWCASE</small><h1>방셀 관리</h1><p>채팅, 카메라, SNS 피드형 방셀을 생성하고 관리합니다.</p></div>
     <button id="lock" class="ghost" hidden>잠금</button>
   </header>
-
   <section id="login" class="panel login">
     <h2>관리자 인증</h2>
-    <form id="loginForm">
-      <label>관리자 비밀번호<input id="password" type="password" required autocomplete="current-password"></label>
-      <button>열기</button>
-    </form>
+    <form id="loginForm"><label>관리자 비밀번호<input id="password" type="password" required autocomplete="current-password"></label><button>열기</button></form>
     <p id="loginError" class="error" hidden></p>
   </section>
-
   <div id="dashboard" hidden>
     <section class="panel">
-      <div class="section-heading">
-        <div><h2>새 방</h2><p>형식을 고르면 필요한 메뉴와 미리보기만 표시됩니다.</p></div>
-      </div>
-
+      <div class="section-heading"><div><h2>새 방셀</h2><p>형식을 고르면 필요한 메뉴와 미리보기만 표시됩니다.</p></div></div>
       <div class="editor-layout">
         <form id="createForm" class="form-stack" enctype="multipart/form-data">
           <fieldset class="type-picker">
-            <legend>방 형식</legend>
-            <label class="type-card">
-              <input type="radio" name="roomType" value="chat" checked>
-              <span class="type-icon">💬</span><b>제한 채팅형</b><small>이미지와 역할별 대화</small>
-            </label>
-            <label class="type-card">
-              <input type="radio" name="roomType" value="camera">
-              <span class="type-icon">📷</span><b>카메라 셔터형</b><small>셔터와 플래시 연출</small>
-            </label>
-            <label class="type-card">
-              <input type="radio" name="roomType" value="feed">
-              <span class="type-icon">▦</span><b>SNS 피드형</b><small>프로필과 게시물 카드</small>
-            </label>
+            <legend>방셀 형식</legend>
+            <label class="type-card"><input type="radio" name="roomType" value="chat" checked><span class="type-card-head"><span class="type-icon">💬</span><b>제한 채팅형</b></span><small>이미지와 역할별 대화</small></label>
+            <label class="type-card"><input type="radio" name="roomType" value="camera"><span class="type-card-head"><span class="type-icon">📷</span><b>카메라 셔터형</b></span><small>셔터와 플래시 연출</small></label>
+            <label class="type-card"><input type="radio" name="roomType" value="feed"><span class="type-card-head"><span class="type-icon">▦</span><b>SNS 피드형</b></span><small>프로필과 게시물 카드</small></label>
           </fieldset>
-
           <div class="form-grid common-fields">
-            <label>방 코드<div class="code-row"><input id="roomCode" name="id" readonly><button id="regenerateCode" type="button" class="ghost">새 코드</button></div></label>
-            <label>제목<input id="titleInput" name="title" maxlength="80" placeholder="방 제목" required></label>
+            <label>방셀 코드<div class="code-row"><input id="roomCode" name="id" readonly><button id="regenerateCode" type="button" class="ghost">새 코드</button></div></label>
+            <label>제목<input id="titleInput" name="title" maxlength="80" placeholder="방셀 제목" required></label>
           </div>
-
           <section id="chatFields" class="conditional-section">
             <h3>채팅 설정</h3>
             <div class="form-grid three">
-              <label>이미지 게시자<input id="publisherName" name="publisherName" value="이미지 게시자"></label>
-              <label>게시판 주인<input id="ownerName" name="ownerName" value="게시판 주인"></label>
+              <label>스트리머<input id="publisherName" name="publisherName" value="스트리머"></label>
+              <label>시청자(받는사람)<input id="ownerName" name="ownerName" value="시청자"></label>
               <label>메시지 제한<input name="messageLimit" type="number" min="1" max="1000" value="30"></label>
-              <label class="avatar-upload-field">게시자 아바타<input id="publisherAvatar" name="publisherAvatar" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><em>미첨부 시 랜덤 단색</em></label>
-              <label class="avatar-upload-field">게시판 주인 아바타<input id="ownerAvatar" name="ownerAvatar" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><em>미첨부 시 랜덤 단색</em></label>
+              <label class="avatar-upload-field">스트리머 프로필<input id="publisherAvatar" name="publisherAvatar" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><em>미첨부 시 랜덤 단색</em></label>
+              <label class="avatar-upload-field">시청자 아바타<input id="ownerAvatar" name="ownerAvatar" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><em>미첨부 시 랜덤 단색</em></label>
             </div>
           </section>
-
           <section id="cameraFields" class="conditional-section" hidden>
             <h3>카메라 설정</h3>
             <div class="option-grid">
@@ -78,7 +54,6 @@
             </div>
             <p class="helper">블러, 플래시, 흔들림, 자동 노출, 샤프닝 효과는 항상 적용됩니다.</p>
           </section>
-
           <section id="feedFields" class="conditional-section" hidden>
             <h3>SNS 피드 설정</h3>
             <div class="form-grid">
@@ -91,76 +66,32 @@
               <label class="check"><input id="showComments" name="showComments" type="checkbox" checked> 자동 댓글 표시</label>
               <label class="check"><input id="showBookmark" name="showBookmark" type="checkbox" checked> 저장 버튼 표시</label>
             </div>
-            <p class="helper">좋아요 수는 방 생성 시 자동 결정됩니다. 여러 이미지는 좌우 화살표로 넘길 수 있습니다.</p>
+            <p class="helper">좋아요 수는 1~100 사이에서 자동 결정됩니다. 여러 이미지는 좌우 화살표로 넘길 수 있습니다.</p>
           </section>
-
-          <label class="upload-field">이미지 최대 5장
-            <input id="images" name="images" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple>
-            <em>장당 최대 25MB · 선택 순서대로 표시</em>
-          </label>
+          <label class="upload-field">이미지 최대 5장<input id="images" name="images" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple><em>장당 최대 25MB · 선택 순서대로 표시</em></label>
           <div id="filePreview" class="file-preview"></div>
-          <button id="createButton" class="create-button">방 생성</button>
+          <button id="createButton" class="create-button">방셀 생성</button>
         </form>
-
-        <aside class="live-preview-wrap">
-          <div class="preview-heading"><span>실시간 미리보기</span><small id="previewTypeName">제한 채팅형</small></div>
-          <div id="livePreview" class="live-preview" aria-live="polite"></div>
-        </aside>
+        <aside class="live-preview-wrap"><div class="preview-heading"><span>실시간 미리보기</span><small id="previewTypeName">제한 채팅형</small></div><div id="livePreview" class="live-preview" aria-live="polite"></div></aside>
       </div>
-
       <div id="created" class="created" hidden>
-        <h3>방 생성 완료</h3>
-        <label id="createdPrimaryUrlWrap">게시자용 주소<input id="createdUrl" readonly></label>
-        <div id="createdPrimaryActions" class="button-row"><button type="button" id="copyCreated">게시자 주소 복사</button><a id="openCreated" class="ghost-link" target="_blank" rel="noopener">게시자 화면 열기</a></div>
-        <label id="createdOwnerUrlWrap">게시판 주인용 주소<input id="createdOwnerUrl" readonly></label>
-        <div id="createdOwnerActions" class="button-row"><button type="button" id="copyCreatedOwner">주인 주소 복사</button><a id="openCreatedOwner" class="ghost-link" target="_blank" rel="noopener">주인 화면 열기</a></div>
-        <label id="createdPrimaryIframeWrap">게시자용 iframe<textarea id="iframeCode" readonly></textarea></label>
-        <button type="button" id="copyIframe">게시자 iframe 복사</button>
-        <label id="createdOwnerIframeWrap">게시판 주인용 iframe<textarea id="ownerIframeCode" readonly></textarea></label>
-        <button id="copyOwnerIframeWrap" type="button">주인 iframe 복사</button>
+        <h3>방셀 생성 완료</h3>
+        <label id="createdPrimaryIframeWrap">스트리머용 iframe<textarea id="iframeCode" readonly></textarea></label>
+        <button type="button" id="copyIframe">스트리머 iframe 복사</button>
+        <label id="createdOwnerIframeWrap">시청자용 iframe<textarea id="ownerIframeCode" readonly></textarea></label>
+        <button id="copyOwnerIframeWrap" type="button">시청자 iframe 복사</button>
       </div>
     </section>
-
     <section class="panel">
-      <div class="heading">
-        <div><h2>방 목록</h2><p id="count"></p></div>
-        <button id="refresh" class="ghost">새로고침</button>
-      </div>
+      <div class="heading"><div><h2>방셀 목록</h2><p id="count"></p></div><button id="refresh" class="ghost">새로고침</button></div>
       <div id="rooms" class="rooms"></div>
     </section>
   </div>
 </main>
-
 <template id="roomTpl">
-  <article class="room">
-    <div class="main">
-      <div class="titleline"><div><h3></h3><code></code></div><span class="badge"></span></div>
-      <div class="stats"></div>
-      <div class="room-actions">
-        <a class="open ghost-link" target="_blank" rel="noopener">열기</a>
-        <button class="copy ghost">주소 복사</button>
-        <button class="iframe-view ghost">iframe 확인</button>
-      </div>
-    </div>
-    <div class="controls">
-      <label class="limit-label">메시지 제한<input class="limit" type="number" min="1" max="1000"></label>
-      <button class="update">변경</button>
-      <button class="reset warn">초기화</button>
-      <button class="delete danger">삭제</button>
-    </div>
-  </article>
+  <article class="room"><div class="main"><div class="titleline"><div><h3></h3><code></code></div><span class="badge"></span></div><div class="stats"></div><div class="room-actions"><a class="open ghost-link" target="_blank" rel="noopener">열기</a><button class="iframe-view ghost">iframe 확인</button></div></div><div class="controls"><label class="limit-label">메시지 제한<input class="limit" type="number" min="1" max="1000"></label><button class="update">변경</button><button class="reset warn">초기화</button><button class="delete danger">삭제</button></div></article>
 </template>
-
-<div id="iframeModal" class="modal" hidden>
-  <div class="modal-backdrop" data-close-modal></div>
-  <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-header"><div><h2 id="modalTitle">iframe 확인</h2><p id="modalRoomName"></p></div><button type="button" class="ghost close-modal" aria-label="닫기">닫기</button></div>
-    <textarea id="modalIframeCode" readonly></textarea>
-    <div class="button-row"><button type="button" id="copyModalIframe">코드 복사</button><a id="openModalRoom" class="ghost-link" target="_blank" rel="noopener">새 탭에서 열기</a></div>
-    <div class="iframe-shell"><iframe id="modalIframe" title="방 미리보기" loading="lazy"></iframe></div>
-  </section>
-</div>
-
+<div id="iframeModal" class="modal" hidden><div class="modal-backdrop" data-close-modal></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-header"><div><h2 id="modalTitle">iframe 확인</h2><p id="modalRoomName"></p></div><button type="button" class="ghost close-modal" aria-label="닫기">닫기</button></div><textarea id="modalIframeCode" readonly></textarea><div class="button-row"><button type="button" id="copyModalIframe">코드 복사</button><a id="openModalRoom" class="ghost-link" target="_blank" rel="noopener">새 탭에서 열기</a></div><div class="iframe-shell"><iframe id="modalIframe" title="방셀 미리보기" loading="lazy"></iframe></div></section></div>
 <div id="toast" class="toast" hidden></div>
 <script src="/admin/admin.js" defer></script>
 </body>

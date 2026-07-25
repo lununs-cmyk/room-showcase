@@ -72,3 +72,19 @@ button,.ghost-link,.type-card{transition:transform .16s ease,background-color .1
 
 /* 방 생성 완료 영역: 채팅형에서만 역할별 추가 주소/iframe 표시 */
 .created [hidden]{display:none!important}
+
+/* v5.6 방셀 관리자 UI 개선 */
+html{font-size:16px}
+body{font-size:15px}
+.page-header p,.section-heading p,.heading p{font-size:15px}
+h2{font-size:25px}h3{font-size:18px}
+label,legend{font-size:14px}
+input,textarea,select{font-size:15px}
+.helper{font-size:13px}.upload-field em,.avatar-upload-field em{font-size:12px}
+.type-picker{gap:9px}
+.type-card{min-height:72px;padding:11px 13px;display:grid;grid-template-rows:auto auto;gap:4px;align-content:center;justify-items:start;text-align:left}
+.type-card-head{display:flex;align-items:center;gap:8px}
+.type-card b{font-size:14px}.type-card small{font-size:12px;line-height:1.35}.type-icon{font-size:19px;line-height:1}
+.stats{font-size:13px}.badge{font-size:12px}.room code{font-size:13px}
+.created textarea,.modal-card textarea{font-size:14px}
+@media(max-width:760px){.type-card{min-height:68px}}
