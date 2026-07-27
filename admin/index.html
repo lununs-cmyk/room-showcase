@@ -10,7 +10,7 @@
 <body>
 <main class="shell">
   <header class="page-header">
-    <div><small>ROOM SHOWCASE</small><h1>방셀 관리</h1><p>채팅, 카메라, SNS, 하트, 레트로 화면형 방셀을 생성하고 관리합니다.</p></div>
+    <div><small>ROOM SHOWCASE</small><h1>방셀 관리</h1><p>채팅, 카메라, SNS, 하트, 레트로, LP, 미니홈피, 카드 가챠형 방셀을 생성하고 관리합니다.</p></div>
     <button id="lock" class="ghost" hidden>잠금</button>
   </header>
   <section id="login" class="panel login">
@@ -30,6 +30,9 @@
             <label class="type-card"><input type="radio" name="roomType" value="feed"><span class="type-card-head"><span class="type-icon">▦</span><b>SNS 피드형</b></span><small>프로필과 게시물 카드</small></label>
             <label class="type-card"><input type="radio" name="roomType" value="heart"><span class="type-card-head"><span class="type-icon">♥</span><b>하트 폭발형</b></span><small>클릭 위치에서 하트 연출</small></label>
             <label class="type-card"><input type="radio" name="roomType" value="crt"><span class="type-card-head"><span class="type-icon">▤</span><b>CRT TV형</b></span><small>레트로 화면 필터와 전환</small></label>
+            <label class="type-card"><input type="radio" name="roomType" value="lp"><span class="type-card-head"><span class="type-icon">💿</span><b>LP 플레이어형</b></span><small>회전 음반과 앨범 커버</small></label>
+            <label class="type-card"><input type="radio" name="roomType" value="mini"><span class="type-card-head"><span class="type-icon">🏠</span><b>미니홈피형</b></span><small>2000년대 감성 프로필</small></label>
+            <label class="type-card"><input type="radio" name="roomType" value="gacha"><span class="type-card-head"><span class="type-icon">🃏</span><b>카드 가챠형</b></span><small>팩 개봉과 카드 뒤집기</small></label>
           </fieldset>
           <div class="form-grid common-fields">
             <label>방셀 코드<div class="code-row"><input id="roomCode" name="id" readonly><button id="regenerateCode" type="button" class="ghost">새 코드</button></div></label>
@@ -100,6 +103,17 @@
               <label class="check"><input id="crtDownload" name="crtDownload" type="checkbox" checked> 원본 저장 버튼 표시</label>
             </div>
             <p class="helper">전원 켜기·끄기, 채널 변경, 스캔라인, 노이즈와 화면 왜곡이 적용됩니다.</p>
+          </section>
+          <section id="lpFields" class="conditional-section" hidden>
+            <h3>LP 플레이어 설정</h3><div class="form-grid"><label>트랙 제목<input id="lpTrackTitle" name="lpTrackTitle" value="Memory Track"></label><label>아티스트<input id="lpArtist" name="lpArtist" value="ROOM SHOWCASE"></label></div>
+            <div class="option-grid"><label class="check"><input id="lpAutoPlay" name="lpAutoPlay" type="checkbox" checked> 자동 재생 연출</label><label class="check"><input id="lpDownload" name="lpDownload" type="checkbox" checked> 원본 저장 버튼 표시</label></div>
+          </section>
+          <section id="miniFields" class="conditional-section" hidden>
+            <h3>미니홈피 설정</h3><div class="form-grid"><label>닉네임<input id="miniNickname" name="miniNickname" value="나의 작은 방"></label><label>상태 메시지<input id="miniStatus" name="miniStatus" value="오늘도 좋은 하루 ♡"></label><label class="wide">소개글<textarea id="miniBio" name="miniBio" maxlength="300">사진과 추억을 모아두는 공간입니다.</textarea></label></div>
+          </section>
+          <section id="gachaFields" class="conditional-section" hidden>
+            <h3>카드 가챠 설정</h3><div class="form-grid"><label>팩 이름<input id="gachaPackName" name="gachaPackName" value="ROOM SHOWCASE PACK"></label><label>최고 등급<select id="gachaTopRarity" name="gachaTopRarity"><option value="legendary">LEGENDARY</option><option value="epic">EPIC</option><option value="rare">RARE</option></select></label></div>
+            <p class="helper">업로드한 이미지를 카드 일러스트로 사용합니다. 실제 결제나 유료 재화 기능은 없습니다.</p>
           </section>
           <label class="upload-field">이미지 최대 5장<input id="images" name="images" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple><em>장당 최대 25MB · 선택 순서대로 표시</em></label>
           <div id="filePreview" class="file-preview"></div>

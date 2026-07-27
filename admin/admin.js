@@ -3,10 +3,10 @@ const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 
 const e = {
   login: $('#login'), dashboard: $('#dashboard'), loginForm: $('#loginForm'), password: $('#password'), loginError: $('#loginError'), lock: $('#lock'),
-  createForm: $('#createForm'), roomTypeInputs: $$('input[name="roomType"]'), chatFields: $('#chatFields'), cameraFields: $('#cameraFields'), feedFields: $('#feedFields'), heartFields: $('#heartFields'), crtFields: $('#crtFields'),
+  createForm: $('#createForm'), roomTypeInputs: $$('input[name="roomType"]'), chatFields: $('#chatFields'), cameraFields: $('#cameraFields'), feedFields: $('#feedFields'), heartFields: $('#heartFields'), crtFields: $('#crtFields'), lpFields: $('#lpFields'), miniFields: $('#miniFields'), gachaFields: $('#gachaFields'),
   images: $('#images'), roomTheme: $('#roomTheme'), filePreview: $('#filePreview'), roomCode: $('#roomCode'), regenerateCode: $('#regenerateCode'),
   titleInput: $('#titleInput'), publisherName: $('#publisherName'), ownerName: $('#ownerName'), publisherAvatar: $('#publisherAvatar'), ownerAvatar: $('#ownerAvatar'), displayName: $('#displayName'), userId: $('#userId'), caption: $('#caption'), avatar: $('#avatar'),
-  showGrid: $('#showGrid'), showStickers: $('#showStickers'), showMeta: $('#showMeta'), shutterSound: $('#shutterSound'), allowDownload: $('#allowDownload'), showComments: $('#showComments'), showBookmark: $('#showBookmark'), heartAuto: $('#heartAuto'), heartDownload: $('#heartDownload'), crtPreset: $('#crtPreset'), crtSound: $('#crtSound'), crtDownload: $('#crtDownload'),
+  showGrid: $('#showGrid'), showStickers: $('#showStickers'), showMeta: $('#showMeta'), shutterSound: $('#shutterSound'), allowDownload: $('#allowDownload'), showComments: $('#showComments'), showBookmark: $('#showBookmark'), heartAuto: $('#heartAuto'), heartDownload: $('#heartDownload'), crtPreset: $('#crtPreset'), crtSound: $('#crtSound'), crtDownload: $('#crtDownload'), lpTrackTitle: $('#lpTrackTitle'), lpArtist: $('#lpArtist'), lpAutoPlay: $('#lpAutoPlay'), lpDownload: $('#lpDownload'), miniNickname: $('#miniNickname'), miniStatus: $('#miniStatus'), miniBio: $('#miniBio'), gachaPackName: $('#gachaPackName'), gachaTopRarity: $('#gachaTopRarity'),
   livePreview: $('#livePreview'), previewTypeName: $('#previewTypeName'),
   created: $('#created'), iframe: $('#iframeCode'), ownerIframe: $('#ownerIframeCode'), copyIframe: $('#copyIframe'), copyOwnerIframe: $('#copyOwnerIframeWrap'),
   rooms: $('#rooms'), count: $('#count'), refresh: $('#refresh'), tpl: $('#roomTpl'), toast: $('#toast'), createButton: $('#createButton'),
@@ -108,7 +108,7 @@ async function load() {
 function renderRooms(rooms) {
   e.rooms.innerHTML = '';
   e.count.textContent = `총 ${rooms.length}개`;
-  const names = { chat: '채팅', camera: '카메라', feed: 'SNS', heart: '하트', crt: 'CRT' };
+  const names = { chat: '채팅', camera: '카메라', feed: 'SNS', heart: '하트', crt: 'CRT', lp: 'LP', mini: '미니홈피', gacha: '가챠' };
 
   for (const room of rooms) {
     const node = e.tpl.content.firstElementChild.cloneNode(true);
@@ -192,7 +192,8 @@ function syncConditionalFields() {
   e.feedFields.hidden = type !== 'feed';
   e.heartFields.hidden = type !== 'heart';
   e.crtFields.hidden = type !== 'crt';
-  e.previewTypeName.textContent = { chat: '제한 채팅형', camera: '카메라 셔터형', feed: 'SNS 피드형', heart: '하트 폭발형', crt: 'CRT TV형' }[type];
+  e.lpFields.hidden = type !== 'lp'; e.miniFields.hidden = type !== 'mini'; e.gachaFields.hidden = type !== 'gacha';
+  e.previewTypeName.textContent = { chat: '제한 채팅형', camera: '카메라 셔터형', feed: 'SNS 피드형', heart: '하트 폭발형', crt: 'CRT TV형', lp: 'LP 플레이어형', mini: '미니홈피형', gacha: '카드 가챠형' }[type];
   renderLivePreview();
 }
 
@@ -281,6 +282,10 @@ function renderLivePreview() {
     e.livePreview.append(wrap); return;
   }
 
+  if (type === 'lp') { const wrap=document.createElement('section'); wrap.className='preview-lp-shell'; wrap.innerHTML=`<div class="preview-lp-cover">${imageUrl?`<img src="${imageUrl}">`:'<span>ALBUM COVER</span>'}</div><div class="preview-lp-record"><i></i></div><div class="preview-lp-info"><b>${e.lpTrackTitle.value||'Memory Track'}</b><span>${e.lpArtist.value||'ROOM SHOWCASE'}</span><button>▶ 재생</button></div>`; e.livePreview.append(wrap); return; }
+  if (type === 'mini') { const wrap=document.createElement('section'); wrap.className='preview-mini-shell'; wrap.innerHTML=`<header><b>MY MINI HOMEPAGE</b><span>TODAY 12 · TOTAL 2004</span></header><main><aside>${imageUrl?`<img src="${imageUrl}">`:'<div class="preview-mini-photo">PHOTO</div>'}<b>${e.miniNickname.value||'나의 작은 방'}</b><p>${e.miniStatus.value||'오늘도 좋은 하루 ♡'}</p></aside><section><nav>HOME · PHOTO · DIARY · GUEST</nav><div class="preview-mini-room">${e.miniBio.value||'사진과 추억을 모아두는 공간입니다.'}</div></section></main>`; e.livePreview.append(wrap); return; }
+  if (type === 'gacha') { const wrap=document.createElement('section'); wrap.className='preview-gacha-shell'; wrap.innerHTML=`<header><b>${e.gachaPackName.value||'ROOM SHOWCASE PACK'}</b><span>FREE DRAW</span></header><div class="preview-gacha-card">${imageUrl?`<img src="${imageUrl}">`:'<div>?</div>'}<strong>${(e.gachaTopRarity.value||'legendary').toUpperCase()}</strong></div><button>1회 뽑기</button>`; e.livePreview.append(wrap); return; }
+
   const wrap=document.createElement('section'); wrap.className='preview-sns-shell';
   const slides=(objectUrls.length?objectUrls:['']).map((url,i)=>`<div class="preview-sns-slide">${url?`<img src="${url}" alt="게시 이미지 ${i+1}">`:'<div class="preview-sns-placeholder">이미지를 선택해 주세요.</div>'}</div>`).join('');
   wrap.innerHTML=`<div class="preview-sns-top"><b><span>✦</span>${title}</b><div>♡</div></div><main class="preview-sns-feed"><article class="preview-sns-post"><header>${avatarUrl?`<img src="${avatarUrl}">`:'<div class="preview-avatar"></div>'}<div><b>${displayName}</b><span>${userId} · 방금 전</span></div><strong>•••</strong></header><div class="preview-sns-media"><div class="new-badge">NEW POST</div><button class="preview-sns-arrow left">‹</button><div class="preview-sns-track">${slides}</div><button class="preview-sns-arrow right">›</button><div class="preview-sns-counter">1 / ${Math.max(1,objectUrls.length)}</div></div><div class="preview-sns-body"><div class="preview-sns-comments">${e.showComments.checked?'<div><b>mood_archive</b> ✧･ﾟ분위기 진짜 최고예요 (˶ᵔ ᵕ ᵔ˶)♡</div><div><b>soft_day</b> 저장 완료 𓂃📌⋆｡°</div>':''}</div><div class="preview-sns-info"><div class="preview-sns-actions"><button>♡</button><button>○</button>${e.showBookmark.checked?'<button class="bookmark">⇩</button>':''}</div><b>좋아요 86개</b><p><b>${displayName}</b> ${caption}</p></div></div></article></main></section>`;
@@ -345,7 +350,7 @@ e.avatar.onchange = () => {
   avatarObjectUrl = e.avatar.files[0] ? URL.createObjectURL(e.avatar.files[0]) : '';
   renderLivePreview();
 };
-[e.titleInput, e.publisherName, e.ownerName, e.displayName, e.userId, e.caption, e.showGrid, e.showStickers, e.showMeta, e.shutterSound, e.allowDownload, e.showComments, e.showBookmark, e.heartAuto, e.heartDownload, e.crtPreset, e.crtSound, e.crtDownload, e.roomTheme].forEach(input => input.addEventListener('input', renderLivePreview));
+[e.titleInput, e.publisherName, e.ownerName, e.displayName, e.userId, e.caption, e.showGrid, e.showStickers, e.showMeta, e.shutterSound, e.allowDownload, e.showComments, e.showBookmark, e.heartAuto, e.heartDownload, e.crtPreset, e.crtSound, e.crtDownload, e.lpTrackTitle, e.lpArtist, e.lpAutoPlay, e.lpDownload, e.miniNickname, e.miniStatus, e.miniBio, e.gachaPackName, e.gachaTopRarity, e.roomTheme].forEach(input => input.addEventListener('input', renderLivePreview));
 
 e.createForm.onsubmit = async event => {
   event.preventDefault();
