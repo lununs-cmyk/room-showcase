@@ -1,5 +1,5 @@
 import { clientIp, error, json } from "./_shared.js";
-const ID=/^[A-Za-z0-9_-]{1,64}$/; const TYPES=new Set(["chat","camera","feed"]); const IMAGE_TYPES=new Set(["image/jpeg","image/png","image/webp","image/gif"]); const MAX=25*1024*1024;
+const ID=/^[A-Za-z0-9_-]{1,64}$/; const TYPES=new Set(["chat","camera","feed","heart","crt"]); const IMAGE_TYPES=new Set(["image/jpeg","image/png","image/webp","image/gif"]); const MAX=25*1024*1024;
 const clean=(v,n)=>typeof v==="string"?v.trim().slice(0,n):"";
 function eq(a,b){if(typeof a!=="string"||typeof b!=="string"||a.length!==b.length)return false;let d=0;for(let i=0;i<a.length;i++)d|=a.charCodeAt(i)^b.charCodeAt(i);return d===0}
 async function auth(request,env){
