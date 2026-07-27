@@ -10,7 +10,7 @@
 <body>
 <main class="shell">
   <header class="page-header">
-    <div><small>ROOM SHOWCASE</small><h1>방셀 관리</h1><p>채팅, 카메라, SNS 피드형 방셀을 생성하고 관리합니다.</p></div>
+    <div><small>ROOM SHOWCASE</small><h1>방셀 관리</h1><p>채팅, 카메라, SNS, 하트, 레트로 화면형 방셀을 생성하고 관리합니다.</p></div>
     <button id="lock" class="ghost" hidden>잠금</button>
   </header>
   <section id="login" class="panel login">
@@ -28,6 +28,8 @@
             <label class="type-card"><input type="radio" name="roomType" value="chat" checked><span class="type-card-head"><span class="type-icon">💬</span><b>제한 채팅형</b></span><small>이미지와 역할별 대화</small></label>
             <label class="type-card"><input type="radio" name="roomType" value="camera"><span class="type-card-head"><span class="type-icon">📷</span><b>카메라 셔터형</b></span><small>셔터와 플래시 연출</small></label>
             <label class="type-card"><input type="radio" name="roomType" value="feed"><span class="type-card-head"><span class="type-icon">▦</span><b>SNS 피드형</b></span><small>프로필과 게시물 카드</small></label>
+            <label class="type-card"><input type="radio" name="roomType" value="heart"><span class="type-card-head"><span class="type-icon">♥</span><b>하트 폭발형</b></span><small>클릭 위치에서 하트 연출</small></label>
+            <label class="type-card"><input type="radio" name="roomType" value="crt"><span class="type-card-head"><span class="type-icon">▤</span><b>CRT TV형</b></span><small>레트로 화면 필터와 전환</small></label>
           </fieldset>
           <div class="form-grid common-fields">
             <label>방셀 코드<div class="code-row"><input id="roomCode" name="id" readonly><button id="regenerateCode" type="button" class="ghost">새 코드</button></div></label>
@@ -67,6 +69,28 @@
               <label class="check"><input id="showBookmark" name="showBookmark" type="checkbox" checked> 저장 버튼 표시</label>
             </div>
             <p class="helper">좋아요 수는 1~100 사이에서 자동 결정됩니다. 여러 이미지는 좌우 화살표로 넘길 수 있습니다.</p>
+          </section>
+
+          <section id="heartFields" class="conditional-section" hidden>
+            <h3>하트 폭발 설정</h3>
+            <div class="option-grid">
+              <label class="check"><input id="heartAuto" name="heartAuto" type="checkbox" checked> 자동으로 하트 띄우기</label>
+              <label class="check"><input id="heartDownload" name="heartDownload" type="checkbox" checked> 원본 저장 버튼 표시</label>
+            </div>
+            <p class="helper">이미지나 하트 버튼을 클릭하면 클릭 위치에서 하트가 퍼집니다.</p>
+          </section>
+          <section id="crtFields" class="conditional-section" hidden>
+            <h3>레트로 화면 설정</h3>
+            <div class="form-grid">
+              <label>화면 프리셋<select id="crtPreset" name="crtPreset">
+                <option value="crt">CRT TV</option><option value="vhs">VHS</option><option value="camcorder">캠코더</option><option value="film">필름</option><option value="8mm">8mm</option><option value="live">스마트폰 라이브</option>
+              </select></label>
+            </div>
+            <div class="option-grid">
+              <label class="check"><input id="crtSound" name="crtSound" type="checkbox" checked> 채널 전환 소리</label>
+              <label class="check"><input id="crtDownload" name="crtDownload" type="checkbox" checked> 원본 저장 버튼 표시</label>
+            </div>
+            <p class="helper">전원 켜기·끄기, 채널 변경, 스캔라인, 노이즈와 화면 왜곡이 적용됩니다.</p>
           </section>
           <label class="upload-field">이미지 최대 5장<input id="images" name="images" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple><em>장당 최대 25MB · 선택 순서대로 표시</em></label>
           <div id="filePreview" class="file-preview"></div>
