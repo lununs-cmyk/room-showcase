@@ -157,3 +157,85 @@ html,body{width:100%;height:100%;min-height:0;overflow:hidden}
 .preset-vhs .retro-screen>img{filter:saturate(.72) contrast(1.2) blur(.35px)}.preset-vhs .retro-rgb{transform:translateX(3px);opacity:.9}.preset-camcorder .retro-osd{color:#fff}.preset-film .retro-scanlines{display:none}.preset-film .retro-noise{opacity:.22;background-size:3px 3px}.preset-8mm .retro-screen>img{filter:sepia(.4) saturate(.65) contrast(1.15)}.preset-8mm .retro-vignette{box-shadow:inset 0 0 130px 48px #000}.preset-live .retro-screen{border-radius:18px}.preset-live .retro-scanlines,.preset-live .retro-rgb{display:none}.preset-live .retro-osd span:first-child::after{content:'  ● LIVE';color:#ff4b65}
 @keyframes retroNoise{to{transform:translate(2px,-1px)}}@keyframes channelJump{0%{transform:translateY(-8px) scaleY(.95)}50%{transform:translateY(8px) scaleY(1.04)}100%{transform:none}}@keyframes powerOff{0%{transform:scaleX(1);opacity:1}55%{transform:scaleX(.05);opacity:1}100%{transform:scale(0);opacity:0}}
 @media(max-width:700px){.heart-shell,.retro-shell{height:680px}.retro-shell{padding:14px;border-width:7px}.retro-shell footer{align-items:flex-start;flex-direction:column}.retro-controls{justify-content:flex-start}}
+
+/* v6.0.2 embedded frame fit + interactive hover feedback */
+.app:has(.heart-shell),
+.app:has(.retro-shell){
+  min-height:0;
+  padding:0;
+  overflow:visible;
+}
+
+.heart-shell,
+.retro-shell{
+  height:min(800px,100dvh);
+  max-height:100dvh;
+}
+
+.heart-shell button,
+.retro-shell button{
+  cursor:pointer;
+  transition:transform .18s ease,background-color .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease,filter .18s ease,opacity .18s ease;
+}
+
+.heart-nav:hover:not(:disabled){
+  transform:translateY(-50%) scale(1.07);
+  border-color:#ff9fc5;
+  background:#3a1027d9;
+  box-shadow:0 10px 28px #ff4f8b40;
+}
+
+.heart-like:hover:not(:disabled){
+  transform:translateY(-2px) scale(1.08);
+  filter:brightness(1.12) saturate(1.12);
+  box-shadow:0 16px 42px #ff4f8b7a;
+}
+
+.heart-like:active:not(:disabled){
+  transform:scale(.96);
+}
+
+.heart-save:hover:not(:disabled){
+  transform:translateY(-2px);
+  border-color:#ff9fc5;
+  background:#ff4f8b24;
+  color:#fff4f9;
+  box-shadow:0 10px 28px #ff4f8b35;
+}
+
+.retro-controls button:hover:not(:disabled){
+  transform:translateY(-2px);
+  border-color:#b7ffab;
+  background:#465343;
+  color:#eaffE6;
+  box-shadow:0 0 0 1px #b7ffab33,0 8px 20px #61ff4d24;
+  text-shadow:0 0 7px #7dff68;
+}
+
+.retro-controls button:active:not(:disabled){
+  transform:translateY(0) scale(.96);
+}
+
+#retroPower:hover:not(:disabled){
+  border-color:#ffd36a;
+  background:#5a4b2d;
+  color:#fff0b8;
+  box-shadow:0 0 0 1px #ffd36a33,0 8px 20px #ffca4d26;
+  text-shadow:0 0 7px #ffd36a;
+}
+
+#retroSave:hover:not(:disabled){
+  border-color:#8fd8ff;
+  background:#29475a;
+  color:#dff5ff;
+  box-shadow:0 0 0 1px #8fd8ff33,0 8px 20px #4bbcff26;
+  text-shadow:0 0 7px #8fd8ff;
+}
+
+@media(max-width:700px){
+  .heart-shell,
+  .retro-shell{
+    height:100dvh;
+    max-height:100dvh;
+  }
+}
