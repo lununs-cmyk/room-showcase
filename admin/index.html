@@ -34,6 +34,15 @@
           <div class="form-grid common-fields">
             <label>방셀 코드<div class="code-row"><input id="roomCode" name="id" readonly><button id="regenerateCode" type="button" class="ghost">새 코드</button></div></label>
             <label>제목<input id="titleInput" name="title" maxlength="80" placeholder="방셀 제목" required></label>
+            <label class="wide">방셀 테마<select id="roomTheme" name="roomTheme">
+              <option value="classic">Classic · 기본</option>
+              <option value="cyber">Cyber · 네온</option>
+              <option value="streamer">Streamer · 방송</option>
+              <option value="minimal">Minimal · 미니멀</option>
+              <option value="retro">Retro · 복고</option>
+              <option value="glass">Glass · 유리</option>
+              <option value="neon">Neon · 발광</option>
+            </select><em class="theme-help">미리보기와 실제 iframe의 배경, 버튼, 테두리와 광원 색상이 함께 변경됩니다.</em></label>
           </div>
           <section id="chatFields" class="conditional-section">
             <h3>채팅 설정</h3>

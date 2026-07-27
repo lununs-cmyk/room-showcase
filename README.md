@@ -127,3 +127,8 @@ D1에 `migrations/0001_initial.sql` 전체를 실행하고 위 바인딩 3개를
 - CRT TV형: CRT/VHS/캠코더/필름/8mm/스마트폰 라이브 프리셋, 전원 및 채널 전환, 원본 저장
 
 기존 D1 스키마를 그대로 사용하므로 추가 마이그레이션은 필요하지 않습니다.
+
+
+## v6.1 방셀 테마
+
+관리자 생성 화면에서 Classic, Cyber, Streamer, Minimal, Retro, Glass, Neon 중 하나를 선택할 수 있습니다. 선택한 테마는 미리보기와 공개 iframe에 동일하게 적용되며 기존 방셀은 Classic 테마로 표시됩니다. DB 마이그레이션은 필요하지 않습니다.

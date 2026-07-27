@@ -239,3 +239,52 @@ html,body{width:100%;height:100%;min-height:0;overflow:hidden}
     max-height:100dvh;
   }
 }
+
+
+/* v6.1 방셀 테마 시스템 */
+:root{
+  --theme-bg:#11131a;--theme-panel:#1a1d27;--theme-panel-2:#232735;--theme-text:#f6f7fb;
+  --theme-muted:#aeb5c6;--theme-accent:#ff4f9a;--theme-accent-2:#8f6cff;--theme-border:rgba(255,255,255,.14);
+  --theme-glow:0 12px 36px rgba(0,0,0,.34);--theme-radius:22px;--theme-blur:0px;
+}
+body.theme-cyber{--theme-bg:#030811;--theme-panel:#071521;--theme-panel-2:#0b2230;--theme-text:#e9ffff;--theme-muted:#8cd4d7;--theme-accent:#00f5d4;--theme-accent-2:#ff2bd6;--theme-border:rgba(0,245,212,.42);--theme-glow:0 0 28px rgba(0,245,212,.18);}
+body.theme-streamer{--theme-bg:#121023;--theme-panel:#211b3c;--theme-panel-2:#312654;--theme-text:#fff9ff;--theme-muted:#c9bce8;--theme-accent:#9147ff;--theme-accent-2:#ff4fa3;--theme-border:rgba(196,159,255,.35);--theme-glow:0 14px 40px rgba(80,35,160,.34);}
+body.theme-minimal{--theme-bg:#f3f4f6;--theme-panel:#ffffff;--theme-panel-2:#f7f7f8;--theme-text:#191b20;--theme-muted:#686d78;--theme-accent:#20242c;--theme-accent-2:#606875;--theme-border:rgba(20,24,32,.14);--theme-glow:0 12px 32px rgba(20,24,32,.10);--theme-radius:14px;}
+body.theme-retro{--theme-bg:#2b2119;--theme-panel:#403126;--theme-panel-2:#594535;--theme-text:#fff1c9;--theme-muted:#d3b987;--theme-accent:#e89b45;--theme-accent-2:#8eb17c;--theme-border:rgba(255,220,150,.28);--theme-glow:0 12px 34px rgba(45,24,10,.4);--theme-radius:12px;}
+body.theme-glass{--theme-bg:#172136;--theme-panel:rgba(255,255,255,.11);--theme-panel-2:rgba(255,255,255,.16);--theme-text:#fff;--theme-muted:#d8e4f6;--theme-accent:#75d7ff;--theme-accent-2:#c193ff;--theme-border:rgba(255,255,255,.28);--theme-glow:0 18px 50px rgba(5,18,40,.35);--theme-blur:18px;}
+body.theme-neon{--theme-bg:#090311;--theme-panel:#160920;--theme-panel-2:#24102f;--theme-text:#fff5ff;--theme-muted:#e3a9ef;--theme-accent:#ff37e1;--theme-accent-2:#6cfff6;--theme-border:rgba(255,55,225,.46);--theme-glow:0 0 30px rgba(255,55,225,.25);}
+body[class*="theme-"]{background:var(--theme-bg);color:var(--theme-text);}
+body[class*="theme-"] #app>section,
+body[class*="theme-"] .chat-card,
+body[class*="theme-"] .camera-shell,
+body[class*="theme-"] .sns-shell,
+body[class*="theme-"] .heart-shell,
+body[class*="theme-"] .retro-shell{border-color:var(--theme-border);box-shadow:var(--theme-glow);border-radius:var(--theme-radius);}
+body[class*="theme-"] button:not(.message-image):not(.filebox-item),
+body[class*="theme-"] a[download]{transition:transform .18s ease,box-shadow .18s ease,filter .18s ease,border-color .18s ease,background .18s ease;}
+body[class*="theme-"] button:not(:disabled):hover,
+body[class*="theme-"] a[download]:hover{transform:translateY(-2px);filter:brightness(1.1);box-shadow:0 8px 22px color-mix(in srgb,var(--theme-accent) 28%,transparent);}
+body[class*="theme-"] button:not(:disabled):active{transform:translateY(0) scale(.97);}
+body[class*="theme-"] .chat-card>header,
+body[class*="theme-"] .sns-top,
+body[class*="theme-"] .heart-shell>header,
+body[class*="theme-"] .retro-top{background:linear-gradient(135deg,var(--theme-panel),var(--theme-panel-2));border-color:var(--theme-border);color:var(--theme-text);}
+body[class*="theme-"] .chat-controls,
+body[class*="theme-"] .sns-post,
+body[class*="theme-"] .heart-shell>footer,
+body[class*="theme-"] .retro-shell>footer,
+body[class*="theme-"] .filebox-panel{background:var(--theme-panel);border-color:var(--theme-border);color:var(--theme-text);backdrop-filter:blur(var(--theme-blur));}
+body[class*="theme-"] .chat-controls button,
+body[class*="theme-"] .heart-like,
+body[class*="theme-"] .heart-save,
+body[class*="theme-"] .retro-controls button,
+body[class*="theme-"] .filebox-save{border-color:var(--theme-border);}
+body[class*="theme-"] .chat-controls button,
+body[class*="theme-"] .heart-like{background:linear-gradient(135deg,var(--theme-accent),var(--theme-accent-2));color:white;}
+body[class*="theme-"] .sns-actions .like.liked{color:var(--theme-accent);text-shadow:0 0 16px color-mix(in srgb,var(--theme-accent) 70%,transparent);}
+body[class*="theme-"] .chat-role-badge,
+body[class*="theme-"] .new-badge{background:var(--theme-accent);color:white;}
+body.theme-minimal .sns-shell,body.theme-minimal .chat-card,body.theme-minimal .heart-shell{color:var(--theme-text);}
+body.theme-minimal .sns-post,body.theme-minimal .chat-controls textarea,body.theme-minimal .filebox-panel{color:#191b20;background:#fff;}
+body.theme-glass::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 10%,rgba(117,215,255,.25),transparent 35%),radial-gradient(circle at 85% 85%,rgba(193,147,255,.22),transparent 36%);}
+body.theme-cyber::after,body.theme-neon::after{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);background-size:24px 24px;}

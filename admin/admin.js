@@ -4,7 +4,7 @@ const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 const e = {
   login: $('#login'), dashboard: $('#dashboard'), loginForm: $('#loginForm'), password: $('#password'), loginError: $('#loginError'), lock: $('#lock'),
   createForm: $('#createForm'), roomTypeInputs: $$('input[name="roomType"]'), chatFields: $('#chatFields'), cameraFields: $('#cameraFields'), feedFields: $('#feedFields'), heartFields: $('#heartFields'), crtFields: $('#crtFields'),
-  images: $('#images'), filePreview: $('#filePreview'), roomCode: $('#roomCode'), regenerateCode: $('#regenerateCode'),
+  images: $('#images'), roomTheme: $('#roomTheme'), filePreview: $('#filePreview'), roomCode: $('#roomCode'), regenerateCode: $('#regenerateCode'),
   titleInput: $('#titleInput'), publisherName: $('#publisherName'), ownerName: $('#ownerName'), publisherAvatar: $('#publisherAvatar'), ownerAvatar: $('#ownerAvatar'), displayName: $('#displayName'), userId: $('#userId'), caption: $('#caption'), avatar: $('#avatar'),
   showGrid: $('#showGrid'), showStickers: $('#showStickers'), showMeta: $('#showMeta'), shutterSound: $('#shutterSound'), allowDownload: $('#allowDownload'), showComments: $('#showComments'), showBookmark: $('#showBookmark'), heartAuto: $('#heartAuto'), heartDownload: $('#heartDownload'), crtPreset: $('#crtPreset'), crtSound: $('#crtSound'), crtDownload: $('#crtDownload'),
   livePreview: $('#livePreview'), previewTypeName: $('#previewTypeName'),
@@ -235,6 +235,7 @@ function renderLivePreview() {
   const imageUrl = selectedImageUrl();
   const avatarUrl = avatarObjectUrl || imageUrl;
   e.livePreview.innerHTML = '';
+  e.livePreview.className = `live-preview theme-${e.roomTheme?.value || 'classic'}`;
 
   if (type === 'chat') {
     const wrap = document.createElement('section');
@@ -344,7 +345,7 @@ e.avatar.onchange = () => {
   avatarObjectUrl = e.avatar.files[0] ? URL.createObjectURL(e.avatar.files[0]) : '';
   renderLivePreview();
 };
-[e.titleInput, e.publisherName, e.ownerName, e.displayName, e.userId, e.caption, e.showGrid, e.showStickers, e.showMeta, e.shutterSound, e.allowDownload, e.showComments, e.showBookmark, e.heartAuto, e.heartDownload, e.crtPreset, e.crtSound, e.crtDownload].forEach(input => input.addEventListener('input', renderLivePreview));
+[e.titleInput, e.publisherName, e.ownerName, e.displayName, e.userId, e.caption, e.showGrid, e.showStickers, e.showMeta, e.shutterSound, e.allowDownload, e.showComments, e.showBookmark, e.heartAuto, e.heartDownload, e.crtPreset, e.crtSound, e.crtDownload, e.roomTheme].forEach(input => input.addEventListener('input', renderLivePreview));
 
 e.createForm.onsubmit = async event => {
   event.preventDefault();
