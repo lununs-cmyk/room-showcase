@@ -157,3 +157,11 @@ D1에 `migrations/0001_initial.sql` 전체를 실행하고 위 바인딩 3개를
 - LP: 앨범 커버·턴테이블·트랙 정보의 3단 가로 배치
 - 미니홈피: 좌측 프로필, 중앙 콘텐츠, 우측 세로 메뉴
 - 가챠: 좌측 대형 카드, 우측 팩 정보와 뽑기 조작부
+
+
+## v7.0.1 iframe viewport fix
+
+- Generated iframe code no longer uses a fixed 800px height.
+- The iframe fills the board's forced 16:9 EMBED_BLOCK using width/height 100%.
+- The admin iframe preview uses the same 16:9 viewport.
+- The public app is pinned to the iframe viewport to prevent vertical centering against an oversized document.

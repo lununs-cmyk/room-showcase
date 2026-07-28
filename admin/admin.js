@@ -82,12 +82,8 @@ function fail(err) {
 const roomUrl = (id, role = '') => `${location.origin}/?room=${encodeURIComponent(id)}${role ? `&role=${encodeURIComponent(role)}` : ''}`;
 const ownerRoomUrl = (id,key) => `${roomUrl(id,'owner')}&key=${encodeURIComponent(key||'')}`;
 
-function iframeHeight(type) {
-  return 800;
-}
-
 function iframeCode(url, type) {
-  return `<iframe src="${url}" style="width:100%;height:${iframeHeight(type)}px;border:0;border-radius:24px" loading="lazy"></iframe>`;
+  return `<iframe src="${url}" width="100%" height="100%" style="display:block;width:100%;height:100%;aspect-ratio:16 / 9;border:0;border-radius:24px" loading="lazy"></iframe>`;
 }
 
 async function copy(text) {
@@ -173,7 +169,7 @@ function openIframeModal(room, chatRole = '') {
   e.modalRoomName.textContent = `${room.title} · ${room.id}`;
   e.modalIframeCode.value = code;
   e.openModalRoom.href = url;
-  e.modalIframe.style.height = `${iframeHeight(room.room_type)}px`;
+  e.modalIframe.style.height = '100%';
   e.modalIframe.src = url;
   e.modal.hidden = false;
   document.body.classList.add('modal-open');

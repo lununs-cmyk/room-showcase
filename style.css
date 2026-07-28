@@ -627,3 +627,22 @@ body{position:relative}
   #app[data-room-type="mini"] .mini-window aside p,#app[data-room-type="mini"] .mini-window aside small{display:none}
   #app[data-room-type="gacha"] .gacha-shell>header small{display:none}
 }
+
+
+/* v7.0.1: the public page must exactly match the iframe viewport, not an 800px document. */
+html,body{
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#app.app{
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#app.app>section{
+  max-width:100%!important;
+  max-height:100%!important;
+}
