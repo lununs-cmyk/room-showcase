@@ -144,3 +144,16 @@ D1에 `migrations/0001_initial.sql` 전체를 실행하고 위 바인딩 3개를
 - All public room-cell types now fill a forced 16:9 iframe without relying on an 800px iframe height.
 - Chat, camera, SNS, heart, CRT, LP, mini homepage and gacha each use a dedicated landscape layout.
 - Outer iframe canvas remains transparent.
+
+## v7.0 가로형 UI 전면 개편
+
+게시판의 16:9 `EMBED_BLOCK` 변환을 기준으로 모든 공개 방셀을 형식별 가로 레이아웃으로 다시 설계했습니다.
+
+- 카메라: 가로형 카메라 본체, 좌측 와이드 뷰파인더, 우측 그립형 조작부
+- 채팅: 넓은 대화 영역과 고정 입력부
+- SNS: 좌측 대형 미디어, 우측 프로필·본문·댓글
+- 하트: 이미지 중심 무대와 축소된 조작부
+- CRT: 와이드 TV 화면과 하단 베젤 조작부
+- LP: 앨범 커버·턴테이블·트랙 정보의 3단 가로 배치
+- 미니홈피: 좌측 프로필, 중앙 콘텐츠, 우측 세로 메뉴
+- 가챠: 좌측 대형 카드, 우측 팩 정보와 뽑기 조작부

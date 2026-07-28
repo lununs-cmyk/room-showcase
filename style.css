@@ -461,3 +461,169 @@ body{position:relative}
   #app[data-room-type="lp"] .lp-shell main{grid-template-columns:.8fr 1.2fr}
   #app[data-room-type="lp"] .lp-cover{display:block}
 }
+
+/* =========================================================
+   v7.0 LANDSCAPE UI REVIEW
+   Every public room is composed specifically for a 16:9 embed.
+   ========================================================= */
+
+#app.app{padding:clamp(4px,.9vw,10px)}
+#app.app>section{isolation:isolate}
+
+/* CAMERA: true landscape camera body, not a portrait screen stretched sideways. */
+#app[data-room-type="camera"] .soop-camera{
+  position:relative;
+  width:min(100%,1120px)!important;
+  height:min(100%,630px)!important;
+  padding:clamp(12px,2vw,24px)!important;
+  border-radius:clamp(22px,3.2vw,44px)!important;
+  background:linear-gradient(145deg,#24262b 0%,#0b0c0f 54%,#1b1d21 100%)!important;
+  border:1px solid #ffffff1c;
+  box-shadow:inset 0 1px 0 #ffffff18,inset 0 -14px 30px #0008,0 20px 55px #0009;
+  overflow:hidden;
+}
+#app[data-room-type="camera"] .soop-camera::before{
+  content:"";position:absolute;left:5%;right:29%;top:7%;height:5%;
+  border-radius:999px;background:linear-gradient(90deg,#111,#3c3f46 45%,#111);opacity:.85
+}
+#app[data-room-type="camera"] .soop-camera::after{
+  content:"";position:absolute;right:2%;top:13%;bottom:13%;width:25%;
+  border-radius:22% 38% 38% 22%/18% 35% 35% 18%;
+  background:linear-gradient(110deg,#111318,#2b2e34 55%,#090a0c);
+  box-shadow:inset 12px 0 20px #0008,inset -2px 0 #ffffff10;z-index:0
+}
+#app[data-room-type="camera"] .camera-stage{position:relative;z-index:1;width:100%;height:100%}
+#app[data-room-type="camera"] .soop-photo-frame{
+  left:2.2%;top:8%;width:68%;height:84%;
+  border:clamp(5px,.8vw,10px) solid #050607;
+  border-radius:clamp(12px,2vw,24px);
+  background:#030405;box-shadow:0 0 0 1px #ffffff22,0 10px 28px #000b;
+  overflow:hidden
+}
+#app[data-room-type="camera"] .soop-photo{
+  width:100%;height:100%;object-fit:contain!important;background:#030405
+}
+#app[data-room-type="camera"] .capture-look{inset:0}
+#app[data-room-type="camera"] .soop-top{
+  left:73%;right:3%;top:10%;height:auto;padding:0;background:none;
+  align-items:flex-start;justify-content:center;text-align:center;z-index:3
+}
+#app[data-room-type="camera"] .soop-top b{font-size:clamp(11px,1.6vw,18px);letter-spacing:.04em;text-shadow:0 2px 8px #000}
+#app[data-room-type="camera"] .soop-bottom{
+  left:73%;right:3%;top:25%;bottom:9%;padding:0;
+  display:grid;grid-template-rows:minmax(0,1fr) auto;align-content:stretch;background:none;z-index:3
+}
+#app[data-room-type="camera"] .mode-row{
+  align-self:start;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(4px,.7vw,8px);margin:0
+}
+#app[data-room-type="camera"] .mode-btn{
+  min-width:0;padding:clamp(5px,.8vw,9px) 3px;border-radius:9px;
+  background:#0b0c0fcc;border-color:#ffffff18;font-size:clamp(8px,1vw,11px)
+}
+#app[data-room-type="camera"] .mode-btn.active{background:#fff;color:#111;border-color:#fff}
+#app[data-room-type="camera"] .camera-controls{align-self:end;display:grid;grid-template-columns:1fr;padding:0;gap:clamp(6px,1vw,11px);justify-items:center}
+#app[data-room-type="camera"] .shutter-slot{height:clamp(48px,10vh,76px);width:100%;display:grid;place-items:center}
+#app[data-room-type="camera"] .soop-shutter{
+  width:clamp(44px,8vh,68px);height:clamp(44px,8vh,68px);
+  border-width:clamp(4px,.7vw,7px);box-shadow:0 0 0 3px #26282d,0 7px 18px #000
+}
+#app[data-room-type="camera"] .capture-actions{position:absolute;inset:auto 0 0;gap:5px}
+#app[data-room-type="camera"] .capture-actions a,#app[data-room-type="camera"] .capture-actions button{padding:6px 8px;font-size:clamp(8px,.95vw,10px)}
+#app[data-room-type="camera"] .camera-nav{left:3.8%;right:31.8%;top:auto;bottom:10%;height:auto;pointer-events:none}
+#app[data-room-type="camera"] .camera-nav span{padding:4px 8px;border-radius:999px;background:#0009;font-size:clamp(9px,1vw,12px)}
+#app[data-room-type="camera"] .capture-meta{font-size:clamp(8px,.9vw,11px)}
+#app[data-room-type="camera"] .soop-grid{opacity:.42}
+
+/* CHAT: wider reading lane, less dead chrome, stable composer. */
+#app[data-room-type="chat"] .chat-card{width:min(100%,1080px);border-radius:clamp(14px,2vw,24px)}
+#app[data-room-type="chat"] .chat-card>header{min-height:0;border-bottom:1px solid #ffffff10}
+#app[data-room-type="chat"] .messages{padding-inline:clamp(14px,3vw,38px)}
+#app[data-room-type="chat"] .msg-content{max-width:min(76%,760px)}
+#app[data-room-type="chat"] .msg.owner .msg-content{align-items:flex-end}
+#app[data-room-type="chat"] .bubble{max-width:100%}
+#app[data-room-type="chat"] .bubble p{max-width:none;margin:0}
+#app[data-room-type="chat"] .chat-controls{border-top:1px solid #ffffff10;background:#0b0e14cc}
+
+/* FEED: desktop social post. Image receives most space; right rail scrolls independently. */
+#app[data-room-type="feed"] .sns-shell{width:min(100%,1120px)}
+#app[data-room-type="feed"] .sns-top{padding-inline:clamp(12px,2vw,22px)}
+#app[data-room-type="feed"] .sns-post{grid-template-columns:minmax(0,1.62fr) minmax(260px,.78fr)}
+#app[data-room-type="feed"] .sns-media{background:#050609;display:grid;place-items:center}
+#app[data-room-type="feed"] .sns-slide,#app[data-room-type="feed"] .sns-slide img{width:100%;height:100%}
+#app[data-room-type="feed"] .sns-slide img{object-fit:contain!important}
+#app[data-room-type="feed"] .sns-post>header{background:#11151dcc}
+#app[data-room-type="feed"] .sns-body{scrollbar-width:thin}
+#app[data-room-type="feed"] .sns-comments{overflow:visible}
+
+/* HEART: stage-dominant composition with slim controls. */
+#app[data-room-type="heart"] .heart-shell{width:min(100%,1120px)}
+#app[data-room-type="heart"] .heart-shell header{min-height:0}
+#app[data-room-type="heart"] .heart-stage{background:#050509;box-shadow:inset 0 0 0 1px #ffffff12}
+#app[data-room-type="heart"] .heart-stage img{object-fit:contain!important}
+#app[data-room-type="heart"] .heart-shell footer{min-height:0;gap:10px}
+#app[data-room-type="heart"] .heart-like{flex:0 0 auto}
+#app[data-room-type="heart"] .heart-save{width:auto;min-width:120px;padding-inline:18px}
+
+/* CRT: wide television cabinet with controls integrated into the lower bezel. */
+#app[data-room-type="crt"] .retro-shell{width:min(100%,1120px);background:linear-gradient(145deg,#4a3b31,#17130f 66%)}
+#app[data-room-type="crt"] .retro-screen{border-width:clamp(8px,1.4vw,16px);background:#050806}
+#app[data-room-type="crt"] .retro-screen img{object-fit:contain!important}
+#app[data-room-type="crt"] .retro-shell footer{border-top:1px solid #ffffff12;margin-top:4px}
+#app[data-room-type="crt"] .retro-controls{margin-left:auto}
+
+/* LP: record is the hero; cover and metadata form a coherent album rail. */
+#app[data-room-type="lp"] .lp-shell{width:min(100%,1120px);grid-template-rows:auto minmax(0,1fr)}
+#app[data-room-type="lp"] .lp-shell main{
+  grid-template-columns:minmax(150px,.62fr) minmax(240px,1fr) minmax(190px,.62fr);
+  gap:clamp(10px,2vw,28px)
+}
+#app[data-room-type="lp"] .lp-cover{height:min(72%,310px);align-self:center}
+#app[data-room-type="lp"] .lp-deck{height:min(92%,430px);align-self:center}
+#app[data-room-type="lp"] .lp-shell footer{
+  align-self:center;display:flex!important;flex-direction:column;justify-content:center;align-items:stretch;
+  gap:clamp(12px,2vh,22px);min-width:0
+}
+#app[data-room-type="lp"] .lp-shell footer>div:first-child{padding:14px;border:1px solid #ffffff12;border-radius:14px;background:#0003}
+#app[data-room-type="lp"] .lp-controls{display:grid;grid-template-columns:repeat(3,1fr)}
+#app[data-room-type="lp"] .lp-controls #lpSave{grid-column:1/-1}
+
+/* MINI HOMEPAGE: classic left profile / center page / right tab rail. */
+#app[data-room-type="mini"] .mini-shell{width:min(100%,1120px)}
+#app[data-room-type="mini"] .mini-window{grid-template-columns:minmax(145px,22%) minmax(0,1fr)}
+#app[data-room-type="mini"] .mini-window>aside{display:grid;grid-template-rows:minmax(0,1fr) auto auto auto;align-content:start;overflow:hidden}
+#app[data-room-type="mini"] .mini-profile{width:min(100%,190px);height:auto;max-height:42vh}
+#app[data-room-type="mini"] .mini-window>main{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:minmax(0,1fr) auto}
+#app[data-room-type="mini"] .mini-window nav{
+  grid-column:2;grid-row:1/-1;display:flex;flex-direction:column;align-self:start;gap:6px;margin-left:8px
+}
+#app[data-room-type="mini"] .mini-window nav button{writing-mode:horizontal-tb;min-width:64px;padding:9px 7px}
+#app[data-room-type="mini"] .mini-room{grid-column:1;grid-row:1;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);overflow:hidden}
+#app[data-room-type="mini"] .mini-room img{min-height:0;max-width:100%}
+#app[data-room-type="mini"] .mini-window main footer{grid-column:1;grid-row:2}
+
+/* GACHA: large card on the left, opening controls/info on the right. */
+#app[data-room-type="gacha"] .gacha-shell{width:min(100%,1120px);grid-template-columns:minmax(0,1fr) minmax(190px,28%);grid-template-rows:auto minmax(0,1fr)}
+#app[data-room-type="gacha"] .gacha-shell>header{grid-column:2;grid-row:1;padding:clamp(8px,1.3vw,14px);display:block;text-align:left}
+#app[data-room-type="gacha"] .gacha-shell>header>span{display:block;margin-top:8px}
+#app[data-room-type="gacha"] .gacha-shell main{grid-column:1;grid-row:1/-1;min-height:0;border-right:1px solid #ffffff14}
+#app[data-room-type="gacha"] .gacha-shell>footer{grid-column:2;grid-row:2;display:flex;flex-direction:column;justify-content:center;align-items:stretch;padding:clamp(10px,2vw,24px)}
+#app[data-room-type="gacha"] .gacha-shell>footer button{width:100%}
+#app[data-room-type="gacha"] .gacha-pack{height:min(78%,400px)}
+#app[data-room-type="gacha"] .gacha-card{height:min(82%,420px)}
+#app[data-room-type="gacha"] .gacha-result{grid-template-columns:auto;grid-template-rows:minmax(0,1fr) auto;gap:8px}
+#app[data-room-type="gacha"] #gachaSave{width:100%;max-width:240px}
+
+@media (max-aspect-ratio: 4/3){
+  #app[data-room-type="camera"] .soop-photo-frame{width:66%}
+  #app[data-room-type="camera"] .soop-top,#app[data-room-type="camera"] .soop-bottom{left:69%}
+  #app[data-room-type="feed"] .sns-post{grid-template-columns:minmax(0,1.35fr) minmax(220px,.85fr)}
+  #app[data-room-type="lp"] .lp-shell main{grid-template-columns:minmax(130px,.7fr) minmax(220px,1fr) minmax(160px,.65fr)}
+}
+
+@media (max-height:360px){
+  #app[data-room-type="camera"] .soop-camera{padding:8px!important}
+  #app[data-room-type="camera"] .mode-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  #app[data-room-type="lp"] .lp-shell header{display:none}
+  #app[data-room-type="mini"] .mini-window aside p,#app[data-room-type="mini"] .mini-window aside small{display:none}
+  #app[data-room-type="gacha"] .gacha-shell>header small{display:none}
+}
