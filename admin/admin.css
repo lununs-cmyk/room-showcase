@@ -253,3 +253,60 @@ select{width:100%;min-height:46px;padding:0 12px;border:1px solid #ffffff18;bord
   margin:0!important;
   transform:none!important;
 }
+
+/* =========================================================
+   v7.0.5 ADMIN 16:9 PREVIEW + VISUAL POLISH
+   ========================================================= */
+.live-preview{
+  position:relative!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  aspect-ratio:16 / 9!important;
+  max-height:none!important;
+  padding:clamp(4px,.65vw,8px)!important;
+  display:grid!important;
+  place-items:stretch!important;
+  overflow:hidden!important;
+  border-radius:20px!important;
+  box-sizing:border-box!important;
+}
+.live-preview>section,.live-preview>div{
+  width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;
+  min-width:0!important;min-height:0!important;margin:0!important;align-self:stretch!important;justify-self:stretch!important;
+  box-sizing:border-box!important;
+}
+.preview-camera-frame.preview-camera-landscape{aspect-ratio:auto!important;height:100%!important}
+.preview-camera-landscape .preview-photo-frame{left:1.25%!important;top:4.3%!important;width:70.7%!important;height:91.4%!important}
+.preview-camera-landscape .preview-camera-top{top:6.6%!important;font-size:clamp(11px,1.18vw,15px)!important}
+.preview-camera-landscape .preview-camera-bottom{top:18.5%!important;bottom:5.5%!important}
+.preview-camera-landscape .preview-camera-nav{bottom:5.8%!important;font-size:clamp(9px,.88vw,12px)!important}
+.preview-camera-landscape .preview-mode-row{gap:clamp(4px,.55vw,7px)!important}
+.preview-camera-landscape .preview-mode-row span{padding:clamp(5px,.7vw,8px) 3px!important;font-size:clamp(9px,.86vw,12px)!important}
+.preview-camera-landscape .preview-shutter{width:clamp(40px,7vh,56px)!important;height:clamp(40px,7vh,56px)!important}
+
+.preview-chat-card,.preview-sns-shell,.preview-heart-shell,.preview-crt-shell,.preview-lp-shell,.preview-mini-shell,.preview-gacha-shell{
+  border-radius:clamp(14px,1.8vw,23px)!important;overflow:hidden!important;
+}
+.preview-chat-card{display:grid!important;grid-template-rows:minmax(0,1fr) auto!important}
+.preview-chat-card,.preview-sns-shell,.preview-heart-shell,.preview-crt-shell,.preview-mini-shell,.preview-gacha-shell{padding:clamp(9px,1.2vw,15px)!important}
+.preview-crt-shell{gap:clamp(9px,1.2vw,15px)!important}
+.preview-crt-shell footer{padding-top:clamp(10px,1.4vw,18px)!important}
+.preview-crt-shell footer div{gap:clamp(7px,.9vw,11px)!important}
+.preview-crt-shell button{min-height:clamp(31px,4.7vh,39px)!important;font-size:clamp(9px,.9vw,12px)!important}
+.preview-lp-shell{padding:clamp(16px,2.2vw,30px)!important;gap:clamp(16px,3vw,42px)!important}
+.preview-lp-info b{font-size:clamp(18px,2.35vw,29px)!important}
+.preview-lp-controls{gap:clamp(4px,.55vw,7px)!important}
+.preview-lp-controls button{width:clamp(34px,5vh,42px)!important;height:clamp(34px,5vh,42px)!important;font-size:clamp(18px,2vw,24px)!important}
+.preview-mini-shell{gap:clamp(8px,1vw,13px)!important}
+.preview-gacha-shell{gap:clamp(10px,1.3vw,18px)!important}
+.preview-gacha-side{gap:clamp(8px,1vw,13px)!important}
+.preview-gacha-side>button{min-height:clamp(33px,5vh,41px)!important;font-size:clamp(10px,1vw,13px)!important}
+
+/* Neutral checkerboard belongs only to the preview canvas, not to the room object. */
+.live-preview[class*="theme-"]{
+  background-color:#11151c!important;
+  box-shadow:inset 0 0 0 1px #ffffff12,0 16px 44px #0005!important;
+}
+
+@media (max-width:760px){.live-preview{border-radius:14px!important;padding:3px!important}}

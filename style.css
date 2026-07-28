@@ -936,3 +936,129 @@ body[data-room-type="camera"] #app,
   top:auto!important;
   bottom:5.8%!important;
 }
+
+/* =========================================================
+   v7.0.5 GLOBAL 16:9 UI POLISH
+   Typography, controls, spacing, framing and color balance.
+   ========================================================= */
+:root{
+  --ui-radius-lg:clamp(16px,2vw,26px);
+  --ui-radius-md:clamp(10px,1.25vw,16px);
+  --ui-gap-xs:clamp(4px,.55vw,7px);
+  --ui-gap-sm:clamp(7px,.9vw,11px);
+  --ui-gap-md:clamp(10px,1.4vw,18px);
+  --ui-pad-shell:clamp(8px,1.25vw,16px);
+  --ui-text-xs:clamp(9px,.88vw,12px);
+  --ui-text-sm:clamp(10px,1vw,13px);
+  --ui-text-md:clamp(12px,1.18vw,15px);
+  --ui-text-lg:clamp(15px,1.65vw,22px);
+  --ui-control-h:clamp(30px,4.7vh,40px);
+}
+html,body,#app.app{width:100%;height:100%;min-width:0;min-height:0;overflow:hidden}
+#app.app{padding:clamp(4px,.6vw,8px)!important}
+button,input,textarea,select{font:inherit}
+button{min-height:var(--ui-control-h);line-height:1.1}
+
+/* Shared shell discipline. Keeps every room inside the 16:9 viewport. */
+#app:not([data-room-type="camera"]) > .chat-card,
+#app:not([data-room-type="camera"]) > .sns-shell,
+#app:not([data-room-type="camera"]) > .heart-shell,
+#app:not([data-room-type="camera"]) > .retro-shell,
+#app:not([data-room-type="camera"]) > .lp-shell,
+#app:not([data-room-type="camera"]) > .mini-window,
+#app:not([data-room-type="camera"]) > .gacha-shell{
+  width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;
+  min-width:0!important;min-height:0!important;margin:0!important;
+  border-radius:var(--ui-radius-lg)!important;overflow:hidden!important;
+}
+
+/* Camera: preserve the fixed viewport solution and refine visual density. */
+#app[data-room-type="camera"]{padding:clamp(3px,.42vw,6px)!important}
+#app[data-room-type="camera"] .soop-camera{border-radius:clamp(13px,1.7vw,23px)!important}
+#app[data-room-type="camera"] .soop-photo-frame{left:1.25%!important;top:4.3%!important;width:70.7%!important;height:91.4%!important}
+#app[data-room-type="camera"] .soop-camera::before{top:2.1%!important;height:2.5%!important}
+#app[data-room-type="camera"] .soop-camera::after{top:4.8%!important;bottom:4.8%!important}
+#app[data-room-type="camera"] .soop-top{top:6.6%!important;font-size:var(--ui-text-md)!important}
+#app[data-room-type="camera"] .soop-bottom{top:18.5%!important;bottom:5.5%!important;gap:var(--ui-gap-sm)!important}
+#app[data-room-type="camera"] .mode-row{gap:var(--ui-gap-xs)!important}
+#app[data-room-type="camera"] .mode-btn{min-height:clamp(28px,4.2vh,36px)!important;padding:5px 4px!important;font-size:var(--ui-text-xs)!important}
+#app[data-room-type="camera"] .camera-nav{bottom:5.8%!important;font-size:var(--ui-text-xs)!important}
+#app[data-room-type="camera"] .soop-shutter{width:clamp(40px,7.5vh,58px)!important;height:clamp(40px,7.5vh,58px)!important}
+
+/* Chat */
+#app[data-room-type="chat"] .chat-card{display:grid!important;grid-template-rows:auto minmax(0,1fr) auto!important}
+#app[data-room-type="chat"] .chat-card>header{padding:clamp(8px,1.2vw,15px)!important;min-height:0!important}
+#app[data-room-type="chat"] .chat-card>header b{font-size:var(--ui-text-lg)!important}
+#app[data-room-type="chat"] .messages{padding:clamp(8px,1.3vw,16px)!important;gap:var(--ui-gap-sm)!important}
+#app[data-room-type="chat"] .bubble{font-size:var(--ui-text-sm)!important;padding:clamp(7px,1vw,11px) clamp(9px,1.2vw,14px)!important;border-radius:clamp(10px,1.25vw,15px)!important}
+#app[data-room-type="chat"] footer{padding:clamp(7px,1vw,12px)!important}
+#app[data-room-type="chat"] textarea{min-height:clamp(34px,5.2vh,44px)!important;font-size:var(--ui-text-sm)!important}
+
+/* SNS */
+#app[data-room-type="feed"] .sns-shell{padding:var(--ui-pad-shell)!important;gap:var(--ui-gap-sm)!important}
+#app[data-room-type="feed"] .sns-post{gap:var(--ui-gap-md)!important;padding:clamp(8px,1.15vw,14px)!important}
+#app[data-room-type="feed"] .sns-media{border-radius:var(--ui-radius-md)!important}
+#app[data-room-type="feed"] .sns-body{gap:var(--ui-gap-sm)!important}
+#app[data-room-type="feed"] .sns-info,#app[data-room-type="feed"] .sns-comments{font-size:var(--ui-text-sm)!important}
+#app[data-room-type="feed"] .sns-actions button{width:clamp(30px,4.8vh,40px)!important;height:clamp(30px,4.8vh,40px)!important;padding:0!important}
+
+/* Heart */
+#app[data-room-type="heart"] .heart-shell{padding:var(--ui-pad-shell)!important;gap:var(--ui-gap-sm)!important}
+#app[data-room-type="heart"] .heart-shell header{padding:0 clamp(3px,.5vw,7px)!important;font-size:var(--ui-text-md)!important}
+#app[data-room-type="heart"] .heart-stage{min-height:0!important;border-radius:var(--ui-radius-md)!important}
+#app[data-room-type="heart"] .heart-shell footer{gap:var(--ui-gap-sm)!important;padding-top:var(--ui-gap-xs)!important}
+#app[data-room-type="heart"] .heart-shell footer button{width:clamp(34px,5.2vh,44px)!important;height:clamp(34px,5.2vh,44px)!important;padding:0!important}
+
+/* CRT */
+#app[data-room-type="crt"] .retro-shell{padding:clamp(12px,1.7vw,22px)!important;gap:clamp(8px,1.2vw,15px)!important}
+#app[data-room-type="crt"] .retro-top{padding:0 clamp(4px,.7vw,9px) clamp(8px,1.1vw,14px)!important;font-size:var(--ui-text-sm)!important}
+#app[data-room-type="crt"] .retro-screen{border-radius:clamp(12px,1.5vw,19px)!important}
+#app[data-room-type="crt"] .retro-shell footer{padding:clamp(10px,1.35vw,17px) clamp(4px,.7vw,9px) 0!important;gap:clamp(12px,1.8vw,22px)!important}
+#app[data-room-type="crt"] .retro-shell footer b{font-size:var(--ui-text-lg)!important}
+#app[data-room-type="crt"] .retro-controls{gap:clamp(7px,1vw,12px)!important}
+#app[data-room-type="crt"] .retro-controls button{height:clamp(32px,5vh,40px)!important;min-width:clamp(52px,8vw,82px)!important;padding-inline:clamp(9px,1.4vw,15px)!important;font-size:var(--ui-text-xs)!important}
+
+/* LP */
+#app[data-room-type="lp"] .lp-shell{padding:clamp(16px,2.4vw,32px)!important}
+#app[data-room-type="lp"] .lp-shell main{gap:clamp(16px,3.3vw,46px)!important}
+#app[data-room-type="lp"] .lp-deck{height:min(88%,440px)!important}
+#app[data-room-type="lp"] .lp-track-info b{font-size:clamp(18px,2.5vw,30px)!important}
+#app[data-room-type="lp"] .lp-track-info span{font-size:var(--ui-text-sm)!important}
+#app[data-room-type="lp"] .lp-controls{gap:var(--ui-gap-xs)!important}
+#app[data-room-type="lp"] .lp-controls button{width:clamp(34px,5.3vh,44px)!important;height:clamp(34px,5.3vh,44px)!important;min-height:0!important;border-radius:12px!important;font-size:clamp(18px,2.15vw,25px)!important}
+
+/* Mini homepage */
+#app[data-room-type="mini"] .mini-window{padding:clamp(10px,1.4vw,18px)!important;gap:var(--ui-gap-sm)!important}
+#app[data-room-type="mini"] .mini-window header{font-size:var(--ui-text-sm)!important;padding-bottom:var(--ui-gap-xs)!important}
+#app[data-room-type="mini"] .mini-window main{gap:var(--ui-gap-md)!important}
+#app[data-room-type="mini"] .mini-window aside{padding:clamp(10px,1.35vw,17px)!important}
+#app[data-room-type="mini"] .mini-window aside b{font-size:var(--ui-text-md)!important}
+#app[data-room-type="mini"] .mini-window aside p,#app[data-room-type="mini"] .mini-room{font-size:var(--ui-text-sm)!important}
+#app[data-room-type="mini"] .mini-window nav{gap:var(--ui-gap-xs)!important}
+#app[data-room-type="mini"] .mini-window nav button{min-width:clamp(56px,7.6vw,76px)!important;min-height:clamp(30px,4.5vh,38px)!important;padding:6px 8px!important;font-size:var(--ui-text-xs)!important}
+
+/* Gacha */
+#app[data-room-type="gacha"] .gacha-shell{padding:clamp(8px,1.1vw,14px)!important;gap:var(--ui-gap-sm)!important}
+#app[data-room-type="gacha"] .gacha-shell>header{padding:clamp(8px,1vw,13px)!important}
+#app[data-room-type="gacha"] .gacha-shell>header b{font-size:var(--ui-text-lg)!important}
+#app[data-room-type="gacha"] .gacha-result{gap:clamp(10px,1.35vw,17px)!important}
+#app[data-room-type="gacha"] .gacha-card{height:min(96%,480px)!important}
+#app[data-room-type="gacha"] .gacha-strip{gap:clamp(6px,.75vw,9px)!important;padding:5px!important}
+#app[data-room-type="gacha"] .gacha-mini-card{border-radius:10px!important}
+#app[data-room-type="gacha"] .gacha-shell>footer{padding:clamp(10px,1.5vw,18px)!important;gap:var(--ui-gap-sm)!important}
+#app[data-room-type="gacha"] .gacha-shell>footer button{min-height:clamp(34px,5vh,42px)!important;font-size:var(--ui-text-sm)!important}
+
+/* Balanced theme contrast. Avoid neon-on-neon and washed-out glass. */
+body[class*="theme-"]{color-scheme:dark}
+body.theme-glass{--theme-border:#ffffff30;--theme-text:#f7f8ff}
+body.theme-neon{--theme-border:color-mix(in srgb,var(--theme-accent) 48%,#ffffff1a)}
+body.theme-minimal{--theme-border:#ffffff20}
+body.theme-retro{--theme-border:#d9b36b55}
+body[class*="theme-"] button:focus-visible{outline:2px solid var(--theme-accent);outline-offset:2px}
+
+@media (max-width:700px){
+  #app.app{padding:3px!important}
+  #app[data-room-type="crt"] .retro-shell{padding:9px!important}
+  #app[data-room-type="lp"] .lp-shell{padding:12px!important}
+  #app[data-room-type="mini"] .mini-window{padding:8px!important}
+}
