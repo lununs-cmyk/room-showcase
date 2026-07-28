@@ -165,3 +165,10 @@ D1에 `migrations/0001_initial.sql` 전체를 실행하고 위 바인딩 3개를
 - The iframe fills the board's forced 16:9 EMBED_BLOCK using width/height 100%.
 - The admin iframe preview uses the same 16:9 viewport.
 - The public app is pinned to the iframe viewport to prevent vertical centering against an oversized document.
+
+
+## v7.0.3
+- 카메라형에 남아 있던 세로 레이아웃의 translate(-50%, -50%) 상속 제거
+- 카메라 뷰파인더와 조작부를 16:9 프레임 안에 정확히 재배치
+- 테마가 iframe 전체 배경이 아니라 방셀 객체의 테두리·강조색·조작부에만 적용되도록 범위 정리
+- 관리자 실시간 미리보기에도 동일한 카메라 좌표 및 테마 범위 적용

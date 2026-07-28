@@ -736,3 +736,121 @@ html,body{
   #app[data-room-type="gacha"] .gacha-result{grid-template-columns:minmax(145px,.72fr) minmax(0,1.28fr)!important}
   #app[data-room-type="gacha"] .gacha-strip{grid-template-columns:repeat(auto-fit,minmax(54px,1fr))}
 }
+
+/* =========================================================
+   v7.0.3 CAMERA GEOMETRY + THEME SCOPE AUDIT
+   ========================================================= */
+/* The iframe canvas is always transparent. Themes decorate only the room object. */
+html,body,body[class*="theme-"],#app,#app.app{
+  background:transparent!important;
+  background-color:transparent!important;
+}
+
+/* Camera: clear old portrait centering transform and fit the body to the 16:9 viewport. */
+#app[data-room-type="camera"]{
+  padding:clamp(4px,.55vw,8px)!important;
+  place-items:stretch!important;
+}
+#app[data-room-type="camera"] .soop-camera{
+  position:relative!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  border:1px solid color-mix(in srgb,var(--theme-accent) 22%,#ffffff1a)!important;
+  border-radius:clamp(14px,2vw,26px)!important;
+  overflow:hidden!important;
+}
+#app[data-room-type="camera"] .camera-stage{
+  position:absolute!important;
+  inset:0!important;
+  width:auto!important;
+  height:auto!important;
+}
+#app[data-room-type="camera"] .soop-photo-frame{
+  position:absolute!important;
+  left:1.4%!important;
+  top:5.5%!important;
+  width:70.2%!important;
+  height:89%!important;
+  aspect-ratio:auto!important;
+  transform:none!important;
+  margin:0!important;
+  border-radius:clamp(11px,1.65vw,21px)!important;
+  box-shadow:0 0 0 1px #ffffff1b,0 8px 24px #0009!important;
+}
+#app[data-room-type="camera"] .soop-photo{
+  transform:none!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+#app[data-room-type="camera"] .soop-photo.loaded{
+  animation:none!important;
+}
+#app[data-room-type="camera"] .soop-camera::before{
+  left:5.2%!important;right:29.5%!important;top:2.6%!important;height:2.8%!important;
+}
+#app[data-room-type="camera"] .soop-camera::after{
+  right:1.2%!important;top:6%!important;bottom:6%!important;width:25.6%!important;
+}
+#app[data-room-type="camera"] .soop-top{
+  left:74%!important;right:2.3%!important;top:8%!important;
+}
+#app[data-room-type="camera"] .soop-bottom{
+  left:74%!important;right:2.3%!important;top:22%!important;bottom:7%!important;
+}
+#app[data-room-type="camera"] .camera-nav{
+  left:3%!important;right:30.4%!important;bottom:7.5%!important;
+}
+#app[data-room-type="camera"] .mode-btn.active{
+  background:var(--theme-accent)!important;
+  color:#fff!important;
+  box-shadow:0 0 18px color-mix(in srgb,var(--theme-accent) 42%,transparent)!important;
+}
+#app[data-room-type="camera"] .soop-focus{
+  border-color:var(--theme-accent)!important;
+  color:var(--theme-accent)!important;
+}
+#app[data-room-type="camera"] .soop-focus::after{background:var(--theme-accent)!important}
+#app[data-room-type="camera"] .soop-shutter{
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--theme-accent) 45%,#2b2d33),0 7px 18px #000!important;
+}
+
+/* Consistent theme scope: accent and chrome change, each format keeps its own identity. */
+body[class*="theme-"] .chat-card,
+body[class*="theme-"] .sns-shell,
+body[class*="theme-"] .heart-shell,
+body[class*="theme-"] .retro-shell,
+body[class*="theme-"] .lp-shell,
+body[class*="theme-"] .gacha-shell{
+  border-color:var(--theme-border)!important;
+  color:var(--theme-text);
+  box-shadow:var(--theme-glow);
+}
+body[class*="theme-"] .chat-card,
+body[class*="theme-"] .sns-shell,
+body[class*="theme-"] .heart-shell{
+  background-color:var(--theme-panel);
+}
+body[class*="theme-"] .mini-shell{
+  box-shadow:var(--theme-glow);
+  outline:1px solid color-mix(in srgb,var(--theme-accent) 28%,transparent);
+}
+body[class*="theme-"] .retro-controls button:hover,
+body[class*="theme-"] .lp-controls button:hover,
+body[class*="theme-"] .gacha-shell button:hover{
+  color:var(--theme-text)!important;
+  box-shadow:0 0 18px color-mix(in srgb,var(--theme-accent) 30%,transparent)!important;
+}
+body.theme-minimal .soop-camera,
+body.theme-minimal .retro-shell,
+body.theme-minimal .lp-shell,
+body.theme-minimal .gacha-shell{
+  color:#f7f8fb;
+}
+
+@media(max-width:700px){
+  #app[data-room-type="camera"]{padding:3px!important}
+  #app[data-room-type="camera"] .soop-photo-frame{left:1%!important;top:4%!important;width:70.8%!important;height:92%!important}
+  #app[data-room-type="camera"] .soop-top,#app[data-room-type="camera"] .soop-bottom{left:73.6%!important}
+}
