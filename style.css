@@ -321,3 +321,143 @@ body.theme-neon::after {
   display: none !important;
   background: none !important;
 }
+
+/* v6.3: every public room-cell is designed for a forced 16:9 EMBED_BLOCK */
+html,body{width:100%;height:100%;min-height:0;overflow:hidden}
+body{position:relative}
+#app.app{
+  width:100%;height:100%;min-height:0;
+  padding:clamp(6px,1.25vw,16px);
+  display:grid;place-items:center;
+  overflow:hidden;
+}
+#app.app>section{width:100%;height:100%;max-width:none;max-height:none;min-width:0;min-height:0;margin:0}
+
+/* Chat: wide conversation canvas, compact fixed header and composer. */
+#app[data-room-type="chat"] .chat-card{
+  width:100%;height:100%;max-width:none;max-height:none;
+  grid-template-rows:auto minmax(0,1fr) auto;
+  border-radius:clamp(12px,2vw,24px)
+}
+#app[data-room-type="chat"] .chat-card>header{padding:clamp(8px,1.5vw,14px) clamp(12px,2vw,20px)}
+#app[data-room-type="chat"] .chat-card h1{font-size:clamp(14px,2vw,20px)}
+#app[data-room-type="chat"] .chat-card header p{font-size:clamp(9px,1.2vw,12px)}
+#app[data-room-type="chat"] .messages{min-height:0;padding:clamp(8px,1.5vw,16px);display:grid;align-content:start;overflow:auto}
+#app[data-room-type="chat"] .msg{margin:clamp(3px,.7vw,7px) 0}
+#app[data-room-type="chat"] .chat-avatar{width:clamp(26px,4vw,38px);height:clamp(26px,4vw,38px);flex-basis:clamp(26px,4vw,38px)}
+#app[data-room-type="chat"] .bubble p{padding:clamp(7px,1.2vw,11px);font-size:clamp(11px,1.55vw,14px)}
+#app[data-room-type="chat"] .message-image{max-width:min(34vw,330px)}
+#app[data-room-type="chat"] .message-image img{max-height:34vh}
+#app[data-room-type="chat"] .chat-controls form{padding:clamp(7px,1.2vw,11px)}
+#app[data-room-type="chat"] .chat-controls textarea{height:clamp(38px,6vh,54px);min-height:0;padding:9px 12px}
+#app[data-room-type="chat"] .filebox-panel{inset:clamp(8px,1.5vw,16px);overflow:auto}
+
+/* Camera: horizontal camera body. Preview occupies the left, controls stay readable on the right/bottom. */
+#app[data-room-type="camera"] .soop-camera{
+  width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;
+  max-width:none!important;max-height:none!important;border-radius:clamp(12px,2vw,26px)!important
+}
+#app[data-room-type="camera"] .camera-stage{width:100%;height:100%}
+#app[data-room-type="camera"] .soop-photo-frame{
+  left:0;top:0;transform:none;width:72%;height:100%;aspect-ratio:auto;border-radius:0 clamp(10px,1.5vw,22px) clamp(10px,1.5vw,22px) 0
+}
+#app[data-room-type="camera"] .soop-top{left:72%;top:0;height:28%;padding:clamp(12px,2.2vw,24px);align-items:flex-start;background:linear-gradient(180deg,#151515,#08080800)}
+#app[data-room-type="camera"] .soop-top span{display:none}
+#app[data-room-type="camera"] .soop-top b{max-width:100%;font-size:clamp(13px,2vw,20px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#app[data-room-type="camera"] .soop-bottom{left:72%;top:22%;bottom:0;padding:clamp(8px,1.6vw,18px);display:grid;align-content:end;background:linear-gradient(180deg,transparent,#000 42%)}
+#app[data-room-type="camera"] .mode-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:0 0 clamp(8px,1.6vw,18px)}
+#app[data-room-type="camera"] .mode-btn{padding:7px 4px;font-size:clamp(9px,1.2vw,12px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#app[data-room-type="camera"] .camera-controls{grid-template-columns:1fr;padding:0;gap:10px;justify-items:center}
+#app[data-room-type="camera"] .cam-thumb,#app[data-room-type="camera"] .flip-btn{display:none}
+#app[data-room-type="camera"] .shutter-slot{width:100%;height:clamp(54px,9vh,76px)}
+#app[data-room-type="camera"] .soop-shutter{width:clamp(50px,8vh,70px);height:clamp(50px,8vh,70px)}
+#app[data-room-type="camera"] .capture-actions{max-width:100%;flex-wrap:wrap;justify-content:center}
+#app[data-room-type="camera"] .capture-actions a,#app[data-room-type="camera"] .capture-actions button{padding:8px 10px;font-size:clamp(9px,1.2vw,12px)}
+#app[data-room-type="camera"] .camera-nav{left:8px;right:28%;top:50%}
+#app[data-room-type="camera"] .camera-nav span{margin:0!important}
+
+/* SNS/feed: media on the left, profile/caption/comments on the right. */
+#app[data-room-type="feed"] .sns-shell{width:100%;height:100%;max-width:none;max-height:none;border-radius:clamp(12px,2vw,24px);overflow:hidden}
+#app[data-room-type="feed"] .sns-top{height:clamp(36px,7vh,54px)}
+#app[data-room-type="feed"] .sns-feed{height:calc(100% - clamp(36px,7vh,54px));padding:clamp(6px,1.2vw,14px)}
+#app[data-room-type="feed"] .sns-post{
+  height:100%;display:grid;
+  grid-template-columns:minmax(0,1.55fr) minmax(240px,.85fr);
+  grid-template-rows:auto minmax(0,1fr);
+  grid-template-areas:"media head" "media body";
+  overflow:hidden
+}
+#app[data-room-type="feed"] .sns-post>header{grid-area:head;border-left:1px solid #ffffff14;padding:clamp(8px,1.3vw,14px)}
+#app[data-room-type="feed"] .sns-media{grid-area:media;height:100%;min-height:0;border-right:1px solid #ffffff14}
+#app[data-room-type="feed"] .sns-body{grid-area:body;min-height:0;overflow:auto;padding:clamp(8px,1.4vw,15px)}
+#app[data-room-type="feed"] .sns-slide img{object-fit:contain}
+#app[data-room-type="feed"] .sns-comments{max-height:none}
+
+/* Heart: compact header/footer with maximum image area. */
+#app[data-room-type="heart"] .heart-shell{width:100%;height:100%;max-width:none;max-height:none;grid-template-rows:auto minmax(0,1fr) auto;border-radius:clamp(12px,2vw,26px)}
+#app[data-room-type="heart"] .heart-shell header{padding:clamp(8px,1.4vw,15px) clamp(12px,2vw,22px)}
+#app[data-room-type="heart"] .heart-shell header h1{font-size:clamp(15px,2.1vw,23px)}
+#app[data-room-type="heart"] .heart-stage{margin:0 clamp(10px,1.8vw,22px);border-radius:clamp(10px,1.7vw,22px)}
+#app[data-room-type="heart"] .heart-shell footer{padding:clamp(7px,1.2vw,13px)}
+#app[data-room-type="heart"] .heart-like{width:clamp(46px,8vh,68px);height:clamp(46px,8vh,68px);font-size:clamp(23px,4vh,32px)}
+#app[data-room-type="heart"] .heart-save{height:clamp(36px,6vh,46px)}
+
+/* CRT: wide screen first, controls in one compact strip. */
+#app[data-room-type="crt"] .retro-shell{width:100%;height:100%;max-width:none;max-height:none;padding:clamp(8px,1.5vw,18px);border-width:clamp(5px,1vw,10px);border-radius:clamp(14px,2vw,28px);grid-template-rows:auto minmax(0,1fr) auto}
+#app[data-room-type="crt"] .retro-top{padding-bottom:clamp(5px,1vw,10px)}
+#app[data-room-type="crt"] .retro-screen{border-radius:clamp(16px,4vw,38px)}
+#app[data-room-type="crt"] .retro-shell footer{padding-top:clamp(7px,1.2vw,13px);gap:10px;flex-direction:row;align-items:center}
+#app[data-room-type="crt"] .retro-shell footer h1{font-size:clamp(13px,1.8vw,19px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#app[data-room-type="crt"] .retro-controls{flex-wrap:nowrap;gap:5px;overflow-x:auto}
+#app[data-room-type="crt"] .retro-controls button{height:clamp(31px,5.5vh,39px);padding:0 clamp(8px,1.2vw,12px);white-space:nowrap}
+
+/* LP: permanent landscape album/deck split. */
+#app[data-room-type="lp"] .lp-shell{width:100%;height:100%;max-width:none;max-height:none;padding:clamp(10px,2vw,22px);grid-template-rows:auto minmax(0,1fr) auto}
+#app[data-room-type="lp"] .lp-shell main{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(14px,3vw,36px)}
+#app[data-room-type="lp"] .lp-cover,#app[data-room-type="lp"] .lp-deck{height:min(100%,calc(100vh - 130px));width:auto;max-width:100%;justify-self:center}
+#app[data-room-type="lp"] .lp-shell footer{gap:12px}
+#app[data-room-type="lp"] .lp-shell footer>div:first-child{min-width:0;display:grid}
+#app[data-room-type="lp"] .lp-shell footer b,#app[data-room-type="lp"] .lp-shell footer span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Mini homepage: side profile and content remain visible inside 16:9. */
+#app[data-room-type="mini"] .mini-shell{width:100%;height:100%;max-width:none;max-height:none;padding:clamp(8px,1.5vw,16px);border-width:clamp(4px,.8vw,9px)}
+#app[data-room-type="mini"] .mini-shell>header{height:clamp(32px,6vh,42px)}
+#app[data-room-type="mini"] .mini-window{height:calc(100% - clamp(42px,8vh,55px));grid-template-columns:minmax(150px,24%) minmax(0,1fr);gap:clamp(7px,1.3vw,14px);margin-top:clamp(6px,1.2vw,13px)}
+#app[data-room-type="mini"] .mini-window>aside,#app[data-room-type="mini"] .mini-window>main{padding:clamp(8px,1.4vw,16px);min-height:0}
+#app[data-room-type="mini"] .mini-profile{height:min(42vh,210px);aspect-ratio:1;margin:auto}
+#app[data-room-type="mini"] .mini-window aside p{min-height:0;font-size:clamp(10px,1.3vw,13px)}
+#app[data-room-type="mini"] .mini-room{min-height:0;margin-top:7px;padding:clamp(8px,1.4vw,16px)}
+#app[data-room-type="mini"] .mini-room img{height:100%;max-height:none;object-fit:contain}
+#app[data-room-type="mini"] .mini-window main footer{padding-top:6px}
+
+/* Gacha: card/pack and controls sized by viewport height. */
+#app[data-room-type="gacha"] .gacha-shell{width:100%;height:100%;max-width:none;max-height:none;padding:clamp(10px,2vw,22px);grid-template-rows:auto minmax(0,1fr) auto}
+#app[data-room-type="gacha"] .gacha-shell>header h1{margin:2px 0;font-size:clamp(15px,2.2vw,24px)}
+#app[data-room-type="gacha"] .gacha-pack{height:min(62vh,360px);width:auto;aspect-ratio:2/3}
+#app[data-room-type="gacha"] .gacha-card{height:min(64vh,380px);width:auto;aspect-ratio:29/43}
+#app[data-room-type="gacha"] .gacha-result{height:100%;display:grid;grid-template-columns:auto auto;align-items:center;justify-content:center;gap:clamp(10px,2vw,24px)}
+#app[data-room-type="gacha"] .gacha-result[hidden]{display:none}
+#app[data-room-type="gacha"] .gacha-shell>footer{justify-content:center;gap:10px}
+
+/* Extremely short embeds: preserve controls and reduce decoration before clipping. */
+@media (max-height:420px){
+  #app.app{padding:4px}
+  #app[data-room-type="chat"] .chat-card>header p,
+  #app[data-room-type="heart"] .heart-shell header small,
+  #app[data-room-type="crt"] .retro-shell footer small,
+  #app[data-room-type="lp"] .lp-shell header span{display:none}
+  #app[data-room-type="camera"] .soop-top{height:20%;padding:10px}
+  #app[data-room-type="camera"] .soop-bottom{top:16%;padding:8px}
+  #app[data-room-type="camera"] .mode-row{margin-bottom:5px}
+  #app[data-room-type="mini"] .mini-window aside small{display:none}
+  #app[data-room-type="gacha"] .gacha-pack{height:58vh}
+  #app[data-room-type="gacha"] .gacha-card{height:60vh}
+}
+
+/* Narrow mobile editor preview still keeps a 16:9-friendly compact composition. */
+@media (max-width:620px){
+  #app[data-room-type="feed"] .sns-post{grid-template-columns:minmax(0,1.35fr) minmax(170px,.85fr)}
+  #app[data-room-type="mini"] .mini-window{grid-template-columns:135px minmax(0,1fr)}
+  #app[data-room-type="lp"] .lp-shell main{grid-template-columns:.8fr 1.2fr}
+  #app[data-room-type="lp"] .lp-cover{display:block}
+}

@@ -138,3 +138,9 @@ D1에 `migrations/0001_initial.sql` 전체를 실행하고 위 바인딩 3개를
 - 테마 적용 시 `#app` 중앙 정렬 클래스가 사라지던 오류 수정
 - LP 플레이어형, 2000년대 감성 미니홈피형, 무료 연출용 카드 가챠형 추가
 - 관리자 실시간 미리보기 및 API 허용 형식/설정 저장 지원
+
+
+## v6.3 16:9 layout overhaul
+- All public room-cell types now fill a forced 16:9 iframe without relying on an 800px iframe height.
+- Chat, camera, SNS, heart, CRT, LP, mini homepage and gacha each use a dedicated landscape layout.
+- Outer iframe canvas remains transparent.

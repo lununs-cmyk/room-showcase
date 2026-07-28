@@ -87,7 +87,7 @@ function iframeHeight(type) {
 }
 
 function iframeCode(url, type) {
-  return `<iframe src="${url}" width="100%" height="${iframeHeight(type)}" style="display:block;width:100%;height:${iframeHeight(type)}px;min-height:${iframeHeight(type)}px;border:0;border-radius:24px;overflow:hidden" loading="lazy" scrolling="no" allowtransparency="true"></iframe>`;
+  return `<iframe src="${url}" style="width:100%;height:${iframeHeight(type)}px;border:0;border-radius:24px" loading="lazy"></iframe>`;
 }
 
 async function copy(text) {
