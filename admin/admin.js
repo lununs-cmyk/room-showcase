@@ -250,7 +250,7 @@ function renderLivePreview() {
   }
 
   if (type === 'camera') {
-    const wrap=document.createElement('div'); wrap.className='preview-camera-frame';
+    const wrap=document.createElement('div'); wrap.className='preview-camera-frame preview-camera-landscape';
     wrap.innerHTML=`<div class="preview-camera-stage">
       <div class="preview-photo-frame">
         ${imageUrl?`<img class="preview-camera-photo" src="${imageUrl}" alt="촬영 이미지">`:'<div class="preview-camera-placeholder">이미지를 선택해 주세요.</div>'}
@@ -260,7 +260,7 @@ function renderLivePreview() {
       <div class="preview-camera-nav"><span>${objectUrls.length?`1 / ${objectUrls.length}`:'0 / 0'}</span></div>
       <div class="preview-camera-bottom">
         <div class="preview-mode-row">${Array.from({length:Math.max(1,objectUrls.length)},(_,i)=>`<span class="${i===0?'active':''}">포토${i+1}</span>`).join('')}</div>
-        <div class="preview-camera-controls"><div class="preview-thumb" style="${imageUrl?`background-image:url('${imageUrl}')`:''}"></div><div class="preview-shutter"></div><div class="preview-flip">↻</div></div>
+        <div class="preview-camera-controls"><div class="preview-shutter"></div></div>
       </div>
     </div>`;
     e.livePreview.append(wrap); return;
@@ -278,9 +278,9 @@ function renderLivePreview() {
     e.livePreview.append(wrap); return;
   }
 
-  if (type === 'lp') { const wrap=document.createElement('section'); wrap.className='preview-lp-shell'; wrap.innerHTML=`<div class="preview-lp-cover">${imageUrl?`<img src="${imageUrl}">`:'<span>ALBUM COVER</span>'}</div><div class="preview-lp-record"><i></i></div><div class="preview-lp-info"><b>${e.lpTrackTitle.value||'Memory Track'}</b><span>${e.lpArtist.value||'ROOM SHOWCASE'}</span><button>▶ 재생</button></div>`; e.livePreview.append(wrap); return; }
+  if (type === 'lp') { const wrap=document.createElement('section'); wrap.className='preview-lp-shell'; wrap.innerHTML=`${imageUrl?`<img class="preview-lp-backdrop" src="${imageUrl}">`:''}<div class="preview-lp-record"><i style="${imageUrl?`background-image:url('${imageUrl}')`:''}"></i></div><div class="preview-lp-info"><b>${e.lpTrackTitle.value||'Memory Track'}</b><span>${e.lpArtist.value||'ROOM SHOWCASE'}</span><div class="preview-lp-controls"><button>‹</button><button>Ⅱ</button><button>›</button><button>⇩</button></div></div>`; e.livePreview.append(wrap); return; }
   if (type === 'mini') { const wrap=document.createElement('section'); wrap.className='preview-mini-shell'; wrap.innerHTML=`<header><b>MY MINI HOMEPAGE</b><span>TODAY 12 · TOTAL 2004</span></header><main><aside>${imageUrl?`<img src="${imageUrl}">`:'<div class="preview-mini-photo">PHOTO</div>'}<b>${e.miniNickname.value||'나의 작은 방'}</b><p>${e.miniStatus.value||'오늘도 좋은 하루 ♡'}</p></aside><section><nav>HOME · PHOTO · DIARY · GUEST</nav><div class="preview-mini-room">${e.miniBio.value||'사진과 추억을 모아두는 공간입니다.'}</div></section></main>`; e.livePreview.append(wrap); return; }
-  if (type === 'gacha') { const wrap=document.createElement('section'); wrap.className='preview-gacha-shell'; wrap.innerHTML=`<header><b>${e.gachaPackName.value||'ROOM SHOWCASE PACK'}</b><span>FREE DRAW</span></header><div class="preview-gacha-card">${imageUrl?`<img src="${imageUrl}">`:'<div>?</div>'}<strong>${(e.gachaTopRarity.value||'legendary').toUpperCase()}</strong></div><button>1회 뽑기</button>`; e.livePreview.append(wrap); return; }
+  if (type === 'gacha') { const wrap=document.createElement('section'); wrap.className='preview-gacha-shell'; const cards=(objectUrls.length?objectUrls:['']).map((url,i)=>`<div class="preview-gacha-mini ${i===0?'active':''}">${url?`<img src="${url}">`:'<span>?</span>'}</div>`).join(''); wrap.innerHTML=`<div class="preview-gacha-feature"><div class="preview-gacha-card">${imageUrl?`<img src="${imageUrl}">`:'<div>?</div>'}<strong>${(e.gachaTopRarity.value||'legendary').toUpperCase()}</strong></div></div><div class="preview-gacha-side"><header><b>${e.gachaPackName.value||'ROOM SHOWCASE PACK'}</b><span>OPEN ALL</span></header><div class="preview-gacha-strip">${cards}</div><button>전체 팩 열기</button></div>`; e.livePreview.append(wrap); return; }
 
   const wrap=document.createElement('section'); wrap.className='preview-sns-shell';
   const slides=(objectUrls.length?objectUrls:['']).map((url,i)=>`<div class="preview-sns-slide">${url?`<img src="${url}" alt="게시 이미지 ${i+1}">`:'<div class="preview-sns-placeholder">이미지를 선택해 주세요.</div>'}</div>`).join('');

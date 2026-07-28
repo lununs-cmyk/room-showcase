@@ -134,3 +134,22 @@ select{width:100%;min-height:46px;padding:0 12px;border:1px solid #ffffff18;bord
   min-height:0!important;
   border:0;
 }
+
+
+/* v7.0.2 admin live preview parity */
+.preview-camera-frame.preview-camera-landscape{width:min(100%,980px)!important;height:auto!important;aspect-ratio:16/9;margin:auto;padding:8px;border-radius:26px;background:linear-gradient(145deg,#24262b,#0b0c0f 55%,#1b1d21);box-shadow:inset 0 1px #ffffff18,0 16px 38px #0008}
+.preview-camera-landscape .preview-camera-stage{position:relative}
+.preview-camera-landscape .preview-photo-frame{position:absolute;left:1.5%;top:5%;width:70%;height:90%;border:7px solid #050607;border-radius:18px;overflow:hidden;background:#030405}
+.preview-camera-landscape .preview-camera-photo{object-fit:contain;transform:none;filter:blur(3px) brightness(.94)}
+.preview-camera-landscape .preview-camera-top{left:74%;right:2%;top:8%;padding:0;justify-content:center}.preview-camera-landscape .preview-camera-top span{display:none}
+.preview-camera-landscape .preview-camera-bottom{left:74%;right:2%;top:22%;bottom:7%;display:grid;grid-template-rows:1fr auto}
+.preview-camera-landscape .preview-mode-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:0}.preview-camera-landscape .preview-mode-row span{padding:7px 3px;border-radius:8px;background:#0b0c0f}.preview-camera-landscape .preview-mode-row .active{background:#fff;color:#111}
+.preview-camera-landscape .preview-camera-controls{display:grid;place-items:center;padding:0}.preview-camera-landscape .preview-shutter{width:54px;height:54px;border:6px solid #050505;box-shadow:0 0 0 3px #3a3d44;border-radius:50%;background:#fff}
+.preview-camera-landscape .preview-camera-nav{left:2%;right:29%;top:auto;bottom:8%}.preview-camera-landscape .preview-camera-nav span{margin:0;padding:4px 8px;border-radius:999px;background:#0009}
+
+.preview-crt-shell{padding:34px!important;gap:14px!important}.preview-crt-shell footer{padding-top:20px!important;gap:20px}.preview-crt-shell footer div{gap:10px;flex-wrap:wrap;justify-content:flex-end}
+
+.preview-lp-shell{position:relative;display:grid!important;grid-template-columns:minmax(260px,1fr) minmax(180px,.6fr)!important;grid-template-rows:1fr!important;align-items:center;gap:42px;padding:34px;background:#0b0910!important}
+.preview-lp-shell:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#08070bd9,#0e0b1299 48%,#08070bd9);pointer-events:none}.preview-lp-backdrop{position:absolute;inset:-7%;width:114%;height:114%;object-fit:cover;filter:blur(28px);opacity:.27}.preview-lp-record,.preview-lp-info{position:relative;z-index:1}.preview-lp-record{width:min(100%,420px);justify-self:center}.preview-lp-record i{background-position:center;background-size:cover}.preview-lp-info{grid-column:auto;display:flex;flex-direction:column;align-items:flex-start;gap:10px}.preview-lp-info b{font-size:28px}.preview-lp-controls{display:flex;gap:6px;margin-top:14px}.preview-lp-controls button{width:42px;height:42px;padding:0;border:0;border-radius:12px;background:transparent;color:#fff;font-size:22px}.preview-lp-controls button:hover{background:#ffffff1c;backdrop-filter:blur(12px)}
+
+.preview-gacha-shell{display:grid!important;grid-template-columns:minmax(260px,.8fr) minmax(0,1.2fr)!important;grid-template-rows:1fr!important;place-items:stretch!important;gap:20px;padding:20px!important}.preview-gacha-feature{display:grid;place-items:center;min-height:0}.preview-gacha-card{width:auto!important;height:min(100%,520px)!important;aspect-ratio:29/43}.preview-gacha-card img{object-fit:contain!important;background:#08070c}.preview-gacha-side{display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:14px;min-height:0}.preview-gacha-side header{display:flex;justify-content:space-between}.preview-gacha-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:8px;align-content:center;overflow:hidden}.preview-gacha-mini{aspect-ratio:2/3;border-radius:10px;overflow:hidden;border:1px solid #ffffff20;background:#140d20;opacity:.84}.preview-gacha-mini.active{box-shadow:0 0 0 2px #fff,0 0 22px #9d65ff}.preview-gacha-mini img{width:100%;height:100%;object-fit:cover}.preview-gacha-mini span{display:grid;place-items:center;height:100%;font-size:32px}.preview-gacha-side>button{justify-self:start;padding:10px 16px;border-radius:10px}
