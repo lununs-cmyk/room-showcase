@@ -218,3 +218,38 @@ select{width:100%;min-height:46px;padding:0 12px;border:1px solid #ffffff18;bord
 .preview-camera-landscape .preview-shutter{
   box-shadow:0 0 0 3px color-mix(in srgb,var(--pv-accent) 45%,#3a3d44)!important;
 }
+
+/* v7.0.4 admin camera preview parity: pin preview camera to the 16:9 canvas. */
+.live-preview:has(.preview-camera-landscape){
+  display:block!important;
+  position:relative!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+.preview-camera-frame.preview-camera-landscape{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  transform:none!important;
+  border-radius:clamp(10px,1.8vw,24px)!important;
+}
+.preview-camera-landscape .preview-camera-stage{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+}
+.preview-camera-landscape .preview-photo-frame{
+  left:1.2%!important;
+  top:4.2%!important;
+  width:70.5%!important;
+  height:91.6%!important;
+  margin:0!important;
+  transform:none!important;
+}

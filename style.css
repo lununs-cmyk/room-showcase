@@ -854,3 +854,85 @@ body.theme-minimal .gacha-shell{
   #app[data-room-type="camera"] .soop-photo-frame{left:1%!important;top:4%!important;width:70.8%!important;height:92%!important}
   #app[data-room-type="camera"] .soop-top,#app[data-room-type="camera"] .soop-bottom{left:73.6%!important}
 }
+
+/* =========================================================
+   v7.0.4 DEFINITIVE CAMERA VIEWPORT RESET
+   Removes every legacy portrait height/centering constraint.
+   The landscape camera is pinned to the iframe viewport itself.
+   ========================================================= */
+html[data-room-type="camera"],
+body[data-room-type="camera"],
+body[data-room-type="camera"] #app,
+#app[data-room-type="camera"]{
+  width:100vw!important;
+  height:100vh!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+#app[data-room-type="camera"]{
+  position:fixed!important;
+  inset:0!important;
+  display:block!important;
+}
+#app[data-room-type="camera"] .soop-camera{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:clamp(5px,.65vw,9px)!important;
+  transform:none!important;
+  align-self:auto!important;
+  justify-self:auto!important;
+  contain:none!important;
+  border-radius:clamp(10px,1.8vw,24px)!important;
+}
+#app[data-room-type="camera"] .camera-stage{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  transform:none!important;
+}
+#app[data-room-type="camera"] .soop-photo-frame{
+  left:1.2%!important;
+  top:4.2%!important;
+  width:70.5%!important;
+  height:91.6%!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  transform:none!important;
+}
+#app[data-room-type="camera"] .soop-camera::before{
+  top:2.2%!important;
+}
+#app[data-room-type="camera"] .soop-camera::after{
+  top:4.5%!important;
+  bottom:4.5%!important;
+}
+#app[data-room-type="camera"] .soop-top{
+  top:6.5%!important;
+}
+#app[data-room-type="camera"] .soop-bottom{
+  top:18%!important;
+  bottom:5.5%!important;
+}
+#app[data-room-type="camera"] .camera-nav{
+  top:auto!important;
+  bottom:5.8%!important;
+}
